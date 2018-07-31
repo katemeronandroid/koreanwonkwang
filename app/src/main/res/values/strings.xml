@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">KoreanWonkWang</string>
+    <string name="settings">Настройки</string>
+    <string name="exit">Выход</string>
+    <string name="appbar_scrolling_view_behavior">false</string>
+    <string name="closed">Урок закрыт</string>
+    <string name="new_words">Новые слова</string>
+    <string name="new_grammar">Новая грамматика</string>
+    <string name="listening">Аудирование</string>
+    <string name="testing">Тестирование</string>
+    <string name="answer_hint">Введите ответ</string>
+    <string name="exercise_label">Выполните упражнение ниже</string>
+    <string name="listen_and_translate">Послушайте и переведите</string>
+    <string name="translator">Переводчик</string>
+    <string name="back">Назад</string>
+    <string name="translation">Перевод</string>
+</resources>
