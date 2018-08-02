@@ -19,6 +19,7 @@ import java.util.Map;
  */
 public class MyIntentService extends IntentService {
     private static final long TIMEOUT = 1000;
+    private static final String KEY_LANG = "lang";
     private static final String KEY_ACTION = "emarkova.GET_TRANSLATION";
     private static final String KEY_WORD = "text";
 
@@ -31,8 +32,10 @@ public class MyIntentService extends IntentService {
         String text = intent.getStringExtra(KEY_WORD);
         APIHelper apiHelper = new APIHelper(text, null);
         String translation = apiHelper.getTranslation(text);
+        String lang = apiHelper.currentLanguage();
         Intent broadcastIntent = new Intent(KEY_ACTION);
         broadcastIntent.putExtra(KEY_WORD, translation);
+        broadcastIntent.putExtra(KEY_LANG, lang);
         sendBroadcast(broadcastIntent);
 
     }

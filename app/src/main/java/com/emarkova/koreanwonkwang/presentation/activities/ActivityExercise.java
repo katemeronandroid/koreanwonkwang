@@ -37,7 +37,7 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
     private String title;
     private String type;
     private boolean checked = false;
-    private int rightAnswers = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

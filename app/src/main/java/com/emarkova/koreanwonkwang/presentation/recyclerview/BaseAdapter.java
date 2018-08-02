@@ -38,6 +38,7 @@ public class BaseAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder.getItemViewType() == 1) {
             ((BaseViewHolder)viewHolder).lessonName.setText(ConstantString.LESSON+ mList.get(position).getNumber());
+            //((BaseViewHolder)viewHolder).lessonName.setTextColor(0x00000000);
             ((BaseViewHolder)viewHolder).lessonTheme.setText(String.valueOf(mList.get(position).getPer()) + "%");
         }
         else {

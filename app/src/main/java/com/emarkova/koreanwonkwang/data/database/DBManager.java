@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.emarkova.koreanwonkwang.data.model.DataExercise;
 import com.emarkova.koreanwonkwang.data.model.DataLesson;
+import com.emarkova.koreanwonkwang.data.model.DataWord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,12 @@ import java.util.List;
 public class DBManager implements DBRepository {
     DBHelperLesson lessonHelper;
     DBHelperExercise exerciseHelper;
+    DBHelperVocabulary vocabularyHelper;
 
     public DBManager(Context context) {
         this.lessonHelper = new DBHelperLesson(context);
         this.exerciseHelper = new DBHelperExercise(context);
+        this.vocabularyHelper = new DBHelperVocabulary(context);
     }
 
     public void uploadLesson(String num, String open, String per, String desc) {
@@ -59,6 +62,29 @@ public class DBManager implements DBRepository {
 
     public void deleteExerciseTable() {
         exerciseHelper.deleteTables(exerciseHelper.getWritableDatabase());
+    }
+
+    //vocabulary
+
+    public void createVocabularyTable() {
+        vocabularyHelper.createTable(vocabularyHelper.getWritableDatabase());
+    }
+
+    public void deleteVocabularyTable() {
+        vocabularyHelper.deleteTable(vocabularyHelper.getWritableDatabase());
+    }
+
+    public List<DataWord> getVocabulary() {
+        return vocabularyHelper.getListOfWords();
+    }
+
+    public void setNewWord(String koWord, String ruWord) {
+        vocabularyHelper.insertWord(koWord, ruWord);
+    }
+
+    @Override
+    public void deleteWord(String id) {
+        vocabularyHelper.deleteWord(id);
     }
 
     public static DBManager getInstance(Context context){

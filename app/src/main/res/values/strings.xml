@@ -14,4 +14,12 @@
     <string name="translator">Переводчик</string>
     <string name="back">Назад</string>
     <string name="translation">Перевод</string>
+    <string name="my_achievements">Мои достижения</string>
+    <string name="my_vocabulary">Мой словарь</string>
+    <string name="about_app">О приложении</string>
+    <string name="translate_hint">Введите текст</string>
+    <string name="add_new_word_success">Слово добавлено в "Мой словарь"</string>
+    <string name="delete_word_alert">Вы уверены, что хотите удалить слово?</string>
+    <string name="in_korean">Введите на корейскиом</string>
+    <string name="in_russian">Введите на русском</string>
 </resources>

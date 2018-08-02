@@ -20,11 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.activities.ActivityLesson" />
-        <activity android:name=".presentation.activities.ActivityTest" />
-        <activity android:name=".presentation.activities.ActivityExercise" />
-        <activity android:name=".presentation.activities.ActivityTranslate" />
-        <activity android:name=".presentation.activities.ActivitySettings" />
+        <activity android:name=".presentation.activities.ActivityLesson"/>
+        <activity android:name=".presentation.activities.ActivityTest"/>
+        <activity android:name=".presentation.activities.ActivityExercise"/>
+        <activity android:name=".presentation.activities.ActivityTranslate"/>
+        <activity android:name=".presentation.activities.ActivitySettings"/>
+        <activity android:name=".presentation.activities.ActivityVocabulary"/>
+        <activity android:name=".presentation.activities.ActivityAchievement"/>
 
         <service
             android:name=".MyIntentService"

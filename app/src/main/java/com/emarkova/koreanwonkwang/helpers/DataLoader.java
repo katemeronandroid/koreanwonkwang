@@ -65,4 +65,8 @@ public class DataLoader {
         }
     }
 
+    public void createVocabularyTable() {
+        manager.createVocabularyTable();
+    }
+
 }

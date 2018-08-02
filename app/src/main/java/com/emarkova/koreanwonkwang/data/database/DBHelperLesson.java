@@ -75,6 +75,7 @@ public class DBHelperLesson extends SQLiteOpenHelper {
             String [] columns = new String[] { "num", "open", "per", "descr" };
             Cursor cursor = database.query(LESTABNAME, columns, null, null, null, null, null);
             result = parceLessonList(cursor);
+            cursor.close();
             database.setTransactionSuccessful();
         }
         catch (SQLiteException e) {

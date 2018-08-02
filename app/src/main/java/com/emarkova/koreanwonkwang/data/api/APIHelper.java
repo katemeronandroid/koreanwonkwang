@@ -23,6 +23,7 @@ public class APIHelper {
     private static final String KOREAN = "ko";
     private static final String RUSSIAN = "ru";
     private Object translateResponse = null;
+    private String language;
 
     public APIHelper(String text, String lang) {
         this.retrofit = new RetrofitHelper();
@@ -30,7 +31,7 @@ public class APIHelper {
     }
 
     public String getTranslation(String textSend) {
-        String language = getLanguage(textSend);
+        language = getLanguage(textSend);
         String fromTo = "";
         switch (language) {
             default:
@@ -58,7 +59,6 @@ public class APIHelper {
         }
         else
             return textSend;
-
     }
 
     public String getLanguage(String textSend) {
@@ -73,6 +73,10 @@ public class APIHelper {
         String language = map.get("lang").toString();
         language = language.replace("]", "").replace("[", "");
         return language;
+    }
+
+    public String currentLanguage() {
+        return this.language;
     }
 
     public Object getTranslateResponse() {

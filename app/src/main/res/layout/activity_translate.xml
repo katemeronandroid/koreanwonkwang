@@ -10,37 +10,53 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:elevation="4dp" >
-    </android.support.v7.widget.Toolbar>
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        android:transitionName="actionBar"
+        />
 
     <EditText
         android:id="@+id/inputWord"
         android:layout_width="301dp"
         android:layout_height="108dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginTop="32dp"
+        android:background="@color/colorTranslateInput"
+        android:hint="@string/translate_hint"
+        android:textColor="@android:color/black"
+        android:gravity="start"
+        android:textAlignment="viewStart"
+        app:layout_constraintBottom_toTopOf="@+id/buttonChange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+         />
 
     <TextView
         android:id="@+id/resultWord"
         android:layout_width="302dp"
         android:layout_height="106dp"
         android:layout_marginBottom="268dp"
-        android:text="@string/translation"
+        android:layout_marginTop="3dp"
+        android:background="@color/colorTranslateOutput"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonChange" />
 
     <Button
         android:id="@+id/buttonChange"
         android:layout_width="49dp"
         android:layout_height="46dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
         android:drawableLeft="@drawable/ic_compare_arrows_black_24dp"
+        android:onClick="changeText"
+        app:layout_constraintBottom_toTopOf="@+id/resultWord"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +67,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:src="@android:drawable/ic_menu_help"
-        />
+        android:layout_marginBottom="52dp"
+        android:onClick="saveWord"
+        android:src="@drawable/ic_add_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
