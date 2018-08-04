@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -30,8 +31,8 @@ public class ActivityTranslate extends AppCompatActivity {
     private EditText editText;
     private TextView textView;
     private String currentLang = "ko";
-    private boolean changeDetection;
-    Handler handler;
+    private boolean changeDetection = false;
+    Handler handlerServiceQueue;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,13 +44,6 @@ public class ActivityTranslate extends AppCompatActivity {
         textView = (TextView)findViewById(R.id.resultWord);
         editText = (EditText) findViewById(R.id.inputWord);
         translateTextListeners();
-        handler = new Handler() {
-          public void handlerMessage(Message message) {
-              Bundle bundle = message.getData();
-              textView.setText(bundle.getString(KEY_WORD));
-              currentLang = bundle.getString(KEY_LANG);
-          }
-        };
     }
 
     @Override

@@ -169,12 +169,14 @@ public class ActivityTest extends AppCompatActivity implements MVPView{
         bundle.putParcelable("exercise", exercise);
         if (exercise.getType().equals(ConstantString.WORD_TYPE) || exercise.getType().equals(ConstantString.GRAMMAR_TYPE)) {
             FragmentExercise exerciseCommon = new FragmentExercise();
+            exerciseCommon.setTestMode(true);
             exerciseCommon.setArguments(bundle);
             transactionManager.replace(R.id.frameExercise,exerciseCommon);
             transactionManager.commit();
         }
         else if(exercise.getType().equals(ConstantString.AUDIO_TYPE)) {
             FragmentAudio exerciseAudio = new FragmentAudio();
+            exerciseAudio.setTestMode(true);
             exerciseAudio.setArguments(bundle);
             transactionManager.replace(R.id.frameExercise,exerciseAudio);
             transactionManager.commit();

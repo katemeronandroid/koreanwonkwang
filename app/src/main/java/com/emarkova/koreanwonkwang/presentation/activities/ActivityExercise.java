@@ -2,6 +2,7 @@ package com.emarkova.koreanwonkwang.presentation.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -62,12 +63,20 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
         presenter.getExercise(title, type);
     }
 
-    private String checkAnswer(String answer, String input) {
+    private boolean checkAnswer(String answer, String input) {
         if (input != null)
             if(input.equalsIgnoreCase(answer)) {
-                return ConstantString.CORRECT;
+                return true;
             }
-        return answer;
+        return false;
+    }
+
+    private int setColor(String answer, String input) {
+        if (input != null)
+            if(input.equalsIgnoreCase(answer)) {
+                return R.color.colorRight;
+            }
+        return R.color.colorWrong;
     }
 
     @Override
@@ -127,10 +136,17 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
                     final Exercise exercise = exercises.get(exercises.size() - fragmentCounter);
                     EditText editText = (EditText) findViewById(R.id.editTextAnswer);
                     if (!checked) {
-                        final AlertDialog.Builder ad = new AlertDialog.Builder(ActivityExercise.this);
+                        AlertDialog.Builder ad;
+                        if(checkAnswer(exercise.getAnswer(), editText.getText().toString())){
+                            ad = new AlertDialog.Builder(ActivityExercise.this, R.style.AlertCorrect);
+                            ad.setMessage(ConstantString.CORRECT);
+                        }
+                        else {
+                            ad = new AlertDialog.Builder(ActivityExercise.this, R.style.AlertWrong);
+                            ad.setMessage(exercise.getAnswer());
+                        }
                         ad.setTitle(ConstantString.ANSWER);
-                        ad.setMessage(checkAnswer(exercise.getAnswer(), editText.getText().toString()));
-                        ad.setPositiveButton(ConstantString.YES, new DialogInterface.OnClickListener() {
+                        ad.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 checked = true;
@@ -138,7 +154,7 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
                                 buttonCheck.setText(ConstantString.NEXT);
                             }
                         });
-                        AlertDialog alert = ad.create();
+                        final AlertDialog alert = ad.create();
                         alert.show();
                     } else {
                         if (fragmentCounter > 1) {

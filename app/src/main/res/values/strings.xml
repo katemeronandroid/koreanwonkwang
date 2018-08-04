@@ -9,7 +9,7 @@
     <string name="listening">Аудирование</string>
     <string name="testing">Тестирование</string>
     <string name="answer_hint">Введите ответ</string>
-    <string name="exercise_label">Выполните упражнение ниже</string>
+    <string name="exercise_label">Переведите упражнение ниже</string>
     <string name="listen_and_translate">Послушайте и переведите</string>
     <string name="translator">Переводчик</string>
     <string name="back">Назад</string>

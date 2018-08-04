@@ -104,5 +104,7 @@ public class ActivityVocabulary extends AppCompatActivity implements MVPVocabula
     public void setWordsList(List<Word> list) {
         vocabularyAdapter = new VocabularyAdapter(list);
         vocabularyRecyclerView.setAdapter(vocabularyAdapter);
+        if(list.size() == 0)
+            setFABVisibility(View.VISIBLE);
     }
 }

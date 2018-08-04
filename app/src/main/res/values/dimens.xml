@@ -2,4 +2,6 @@
 <resources>
     <dimen name="item_height">80dp</dimen>
     <dimen name="item_width">350dp</dimen>
+    <dimen name="word_size">24sp</dimen>
+    <dimen name="label_size">18sp</dimen>
 </resources>

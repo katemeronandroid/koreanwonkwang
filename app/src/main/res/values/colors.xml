@@ -6,4 +6,6 @@
     <color name="toolbar_color">#FFFFFF</color>
     <color name="colorTranslateInput">#5b33b5e5</color>
     <color name="colorTranslateOutput">#5b40da9d</color>
+    <color name="colorRight">#cc31ed5d</color>
+    <color name="colorWrong">#ccf13844</color>
 </resources>

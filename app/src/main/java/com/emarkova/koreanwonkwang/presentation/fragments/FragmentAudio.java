@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.emarkova.koreanwonkwang.R;
 import com.emarkova.koreanwonkwang.databinding.FragmentAudioBinding;
@@ -23,6 +24,8 @@ public class FragmentAudio extends Fragment {
     private Button buttonPlay;
     private MediaPlayer mediaPlayer;
     private Exercise exercise;
+    private boolean testMode = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,5 +81,9 @@ public class FragmentAudio extends Fragment {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+    }
+
+    public void setTestMode(boolean testMode) {
+        this.testMode = testMode;
     }
 }

@@ -4,22 +4,28 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.emarkova.koreanwonkwang.data.database.DBManager;
 import com.emarkova.koreanwonkwang.domain.usecases.GetLessonList;
 import com.emarkova.koreanwonkwang.helpers.ConstantString;
+import com.emarkova.koreanwonkwang.presentation.MVP.VocabularyPresenter;
+import com.emarkova.koreanwonkwang.presentation.MVP.VocabularyPresenterImp;
 import com.emarkova.koreanwonkwang.presentation.activities.ActivityAchievement;
 import com.emarkova.koreanwonkwang.presentation.activities.ActivityExercise;
 import com.emarkova.koreanwonkwang.presentation.activities.ActivityLesson;
@@ -63,26 +69,43 @@ public class MainActivity extends AppCompatActivity {
         manager = new DBManager(this);//убрать в конце
 
         //загрузчик
-        defaultPreferences = new DefaultPreferences(MainActivity.this);
-        //defaultPreferences.setBDDefined(false);
-        //manager.deleteLessonTable();
-        //manager.deleteExerciseTable();
-        //manager.deleteVocabularyTable();
-        //manager.createVocabularyTable();
+        DefaultPreferences defaultPreferences = new DefaultPreferences(MainActivity.this);
+
+        /*defaultPreferences.setBDDefined(false);
+        manager.deleteLessonTable();
+        manager.deleteExerciseTable();
+        manager.deleteVocabularyTable();*/
+
         if(!defaultPreferences.checkDBDefined(getSharedPreferences(DEFAULT_PREF, Context.MODE_PRIVATE))) {
+            Log.d("Logs", String.valueOf(defaultPreferences.checkDBDefined(getSharedPreferences(DEFAULT_PREF, Context.MODE_PRIVATE))));
             //загрузка данных
-            DataLoader dataLoader = new DataLoader(MainActivity.this);
-            dataLoader.loadLessons();
-            dataLoader.loadExercise();
-            dataLoader.createVocabularyTable();
-            defaultPreferences.setBDDefined(true);
+            (new Thread(()->{
+                DataLoader dataLoader = new DataLoader(MainActivity.this);
+                dataLoader.loadLessons();
+                dataLoader.loadExercise();
+                dataLoader.createVocabularyTable();
+                defaultPreferences.setBDDefined(true);
+            })).start();
         }
+
+        //initUser();
+/*        while (!defaultPreferences.checkDBDefined(getSharedPreferences(DEFAULT_PREF, Context.MODE_PRIVATE))){}
+
+        initRecyclerView();*/
+
+        while (!defaultPreferences.checkDBDefined(getSharedPreferences(DEFAULT_PREF, Context.MODE_PRIVATE))){}
         initRecyclerView();
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -205,5 +228,22 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private  void initUser() {
+        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+        View layout = inflater.inflate(R.layout.dialog_user_info, null);
+        final EditText userName = (EditText)layout.findViewById(R.id.userNameDialog);
+        final EditText userEmail = (EditText)layout.findViewById(R.id.userEmailDialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setView(layout);
+        builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.create().show();
+        Log.d("Logs", "here");
     }
 }

@@ -38,6 +38,7 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
 
     public VocabularyAdapter(List<Word> list) {
         this.mData = list;
+        //Log.d("Logs", String.valueOf(mData.size()));
     }
 
     @NonNull

@@ -18,6 +18,7 @@ public class FragmentExercise extends Fragment {
     private TextView word;
     private TextView question;
     private FragmentExerciseBinding binding;
+    private boolean testMode = false;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,6 +31,8 @@ public class FragmentExercise extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         word = (TextView)view.findViewById(R.id.textWord);
+        if(testMode)
+            word.setVisibility(View.INVISIBLE);
         question = (TextView)view.findViewById(R.id.textQuestion);
         Bundle bundle = getArguments();
         if(bundle != null) {
@@ -37,5 +40,9 @@ public class FragmentExercise extends Fragment {
             binding.setExercise(exercise);
             //question.setText(exercise.getQuestion());
         }
+    }
+
+    public void setTestMode(boolean testMode) {
+        this.testMode = testMode;
     }
 }
