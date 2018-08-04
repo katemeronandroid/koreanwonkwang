@@ -105,7 +105,7 @@ public class DBHelperVocabulary extends SQLiteOpenHelper {
 
     public void deleteWord(String id) {
         SQLiteDatabase database = this.getWritableDatabase();
-        try{
+        try {
             database.beginTransaction();
             database.delete(TABNAME, "id = ?", new String[]{id});
             database.setTransactionSuccessful();
@@ -119,4 +119,23 @@ public class DBHelperVocabulary extends SQLiteOpenHelper {
             database.close();
         }
     }
+     public void updateWord(DataWord dataWord) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        try {
+            database.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put("ko_word", dataWord.getKoWord());
+            values.put("ru_word", dataWord.getRuWord());
+            database.update(TABNAME, values, "id = ?", new String[]{dataWord.getId()});
+            database.setTransactionSuccessful();
+        }
+        catch (SQLiteException e) {
+            Log.v("SQLiteExeption", e.getMessage());
+        }
+        finally {
+            if(database.inTransaction())
+                database.endTransaction();
+            database.close();
+        }
+     }
 }

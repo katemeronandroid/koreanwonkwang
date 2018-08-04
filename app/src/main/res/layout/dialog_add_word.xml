@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <EditText
-        android:id="@+id/koreanInputText"
+        android:id="@+id/koreanInputDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -12,7 +12,7 @@
         android:layout_marginBottom="4dp"
         android:hint="@string/in_korean" />
     <EditText
-        android:id="@+id/russianInputText"
+        android:id="@+id/russianInputDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"

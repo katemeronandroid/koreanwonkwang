@@ -2,20 +2,26 @@ package com.emarkova.koreanwonkwang;
 
 import android.app.Instrumentation;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 
 import com.emarkova.koreanwonkwang.data.database.DBManager;
 import com.emarkova.koreanwonkwang.domain.usecases.GetLessonList;
+import com.emarkova.koreanwonkwang.helpers.ConstantString;
 import com.emarkova.koreanwonkwang.presentation.activities.ActivityAchievement;
+import com.emarkova.koreanwonkwang.presentation.activities.ActivityExercise;
 import com.emarkova.koreanwonkwang.presentation.activities.ActivityLesson;
 import com.emarkova.koreanwonkwang.helpers.DataLoader;
 import com.emarkova.koreanwonkwang.presentation.activities.ActivitySettings;
@@ -125,6 +131,17 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         if(drawerItem.getIdentifier() == 4) {
                             //alert
+                            final AlertDialog.Builder ad = new AlertDialog.Builder(MainActivity.this);
+                            ad.setTitle(R.string.about_app);
+                            ad.setMessage("Информация об устройстве");
+                            ad.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            });
+                            AlertDialog alert = ad.create();
+                            alert.show();
                         }
                         else {
                             Intent intent;

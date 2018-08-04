@@ -19,6 +19,7 @@ public interface DBRepository {
     public void setTestResult(double result, String title);
     public void openLesson(String title);
     public void setNewWord(String koWord, String ruWord);
+    public void updateWord(DataWord dataWord);
     public void deleteWord(String id);
     public void deleteLessonTable();
     public void createLessonTable();

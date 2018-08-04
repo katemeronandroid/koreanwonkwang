@@ -82,6 +82,10 @@ public class DBManager implements DBRepository {
         vocabularyHelper.insertWord(koWord, ruWord);
     }
 
+    public void updateWord(DataWord dataWord) {
+        vocabularyHelper.updateWord(dataWord);
+    }
+
     @Override
     public void deleteWord(String id) {
         vocabularyHelper.deleteWord(id);

@@ -5,28 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
-
 import com.emarkova.koreanwonkwang.MyIntentService;
 import com.emarkova.koreanwonkwang.R;
-import com.emarkova.koreanwonkwang.data.api.TranslateServer;
 import com.emarkova.koreanwonkwang.domain.usecases.SetNewWord;
-
-import java.util.concurrent.TimeUnit;
 
 public class ActivityTranslate extends AppCompatActivity {
     private static final String KEY_WORD = "text";
@@ -38,6 +30,8 @@ public class ActivityTranslate extends AppCompatActivity {
     private EditText editText;
     private TextView textView;
     private String currentLang = "ko";
+    private boolean changeDetection;
+    Handler handler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +43,13 @@ public class ActivityTranslate extends AppCompatActivity {
         textView = (TextView)findViewById(R.id.resultWord);
         editText = (EditText) findViewById(R.id.inputWord);
         translateTextListeners();
+        handler = new Handler() {
+          public void handlerMessage(Message message) {
+              Bundle bundle = message.getData();
+              textView.setText(bundle.getString(KEY_WORD));
+              currentLang = bundle.getString(KEY_LANG);
+          }
+        };
     }
 
     @Override
@@ -88,7 +89,6 @@ public class ActivityTranslate extends AppCompatActivity {
     private class CustomBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            //Log.d("Logs", "response" + intent.getStringExtra(KEY_WORD));
             textView.setText(intent.getStringExtra(KEY_WORD));
             currentLang = intent.getStringExtra(KEY_LANG);
         }
@@ -122,7 +122,6 @@ public class ActivityTranslate extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                //Log.d("Logs", "edit " + String.valueOf(editable.length()));
                 if(editable.length() != 0) {
                     Intent intent = new Intent(ActivityTranslate.this, MyIntentService.class);
                     intent.putExtra(KEY_WORD, editText.getText().toString());
@@ -134,7 +133,6 @@ public class ActivityTranslate extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //Log.d("Logs", "HERE THERE");
                     Intent broadcastIntent = new Intent(KEY_ACTION);
                     broadcastIntent.putExtra(KEY_WORD, "");
                     broadcastIntent.putExtra(KEY_LANG, currentLang);

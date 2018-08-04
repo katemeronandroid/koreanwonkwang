@@ -2,36 +2,46 @@ package com.emarkova.koreanwonkwang.presentation.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.emarkova.koreanwonkwang.R;
 import com.emarkova.koreanwonkwang.domain.usecases.GetVocabularyList;
+import com.emarkova.koreanwonkwang.domain.usecases.SetNewWord;
 import com.emarkova.koreanwonkwang.helpers.ConstantString;
+import com.emarkova.koreanwonkwang.presentation.MVP.MVPVocabularyView;
+import com.emarkova.koreanwonkwang.presentation.MVP.VocabularyPresenter;
+import com.emarkova.koreanwonkwang.presentation.MVP.VocabularyPresenterImp;
 import com.emarkova.koreanwonkwang.presentation.model.Word;
 import com.emarkova.koreanwonkwang.presentation.recyclerview.VocabularyAdapter;
 
 import java.util.List;
 
-public class ActivityVocabulary extends AppCompatActivity {
+public class ActivityVocabulary extends AppCompatActivity implements MVPVocabularyView {
     private RecyclerView vocabularyRecyclerView;
     private RecyclerView.Adapter vocabularyAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private Toolbar toolbar;
-
+    private static FloatingActionButton floatingButton;
 
     @Override
     public void onBackPressed() {
         if(VocabularyAdapter.editMode) {
             VocabularyAdapter.editMode = false;
+            setFABVisibility(View.VISIBLE);
             vocabularyAdapter.notifyDataSetChanged();
         }
         else
@@ -42,13 +52,13 @@ public class ActivityVocabulary extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vocabulary);
-        final List<Word> wordList = (new GetVocabularyList()).getVocabularyList();
-        Log.d("Logs", String.valueOf(wordList.size()));
+        floatingButton = findViewById(R.id.fab);
         vocabularyRecyclerView = (RecyclerView)findViewById(R.id.wordRecyclerList);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         vocabularyRecyclerView.setLayoutManager(layoutManager);
-        vocabularyAdapter = new VocabularyAdapter(wordList);
-        vocabularyRecyclerView.setAdapter(vocabularyAdapter);
+        VocabularyPresenter presenter = new VocabularyPresenterImp();
+        presenter.connectToView(ActivityVocabulary.this);
+        presenter.getVocabularyList();
         initToolbar();
     }
 
@@ -67,5 +77,32 @@ public class ActivityVocabulary extends AppCompatActivity {
     }
 
     public void newWord(View view) {
+        LayoutInflater inflater = LayoutInflater.from(view.getContext());
+        View layout = inflater.inflate(R.layout.dialog_add_word, null);
+        final EditText koWord = (EditText)layout.findViewById(R.id.koreanInputDialog);
+        final EditText ruWord = (EditText)layout.findViewById(R.id.russianInputDialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setView(layout);
+        builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                VocabularyPresenter presenter = new VocabularyPresenterImp();
+                presenter.connectToView(ActivityVocabulary.this);
+                presenter.newWord(koWord.getText().toString(), ruWord.getText().toString());
+                dialogInterface.cancel();
+                presenter.getVocabularyList();
+            }
+        });
+        builder.create().show();
+    }
+
+    public static void setFABVisibility(int mode) {
+        floatingButton.setVisibility(mode);
+    }
+
+    @Override
+    public void setWordsList(List<Word> list) {
+        vocabularyAdapter = new VocabularyAdapter(list);
+        vocabularyRecyclerView.setAdapter(vocabularyAdapter);
     }
 }
