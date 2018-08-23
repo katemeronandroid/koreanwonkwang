@@ -36,7 +36,8 @@ public class MyIntentService extends IntentService {
         Intent broadcastIntent = new Intent(KEY_ACTION);
         broadcastIntent.putExtra(KEY_WORD, translation);
         broadcastIntent.putExtra(KEY_LANG, lang);
-        sendBroadcast(broadcastIntent);
+        sendOrderedBroadcast(broadcastIntent, null);
+        //sendBroadcast(broadcastIntent);
 
     }
 }

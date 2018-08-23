@@ -28,7 +28,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class ActivityExercise extends AppCompatActivity implements MVPView {
-    private static final String NUMBER_KEY = "number";
+    private static final String LESSON_KEY = "number";
+    private static final String EXERCISE_KEY = "exercise";
     private static final String TYPE_KEY = "type";
     private FragmentTransaction transactionManager;
     private FragmentManager fragmentManager;
@@ -44,7 +45,7 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words);
         Intent intent = getIntent();
-        title = intent.getStringExtra(NUMBER_KEY);
+        title = intent.getStringExtra(LESSON_KEY);
         type = intent.getStringExtra(TYPE_KEY);
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar.setTitleTextColor(0xFFFFFFFF);
@@ -82,7 +83,7 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
     @Override
     protected void onResume() {
         super.onResume();
-        toolbar.setTitle(ConstantString.LESSON + title);
+        toolbar.setTitle(R.string.lesson+ " " + title);
     }
 
     private void clearStack(){
@@ -96,18 +97,18 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
     @Override
     public void onBackPressed() {
         final AlertDialog.Builder ad = new AlertDialog.Builder(ActivityExercise.this);
-        ad.setTitle(ConstantString.ALERT_TITLE);
-        ad.setMessage(ConstantString.ALERT_EXIT);
-        ad.setPositiveButton(ConstantString.YES, new DialogInterface.OnClickListener() {
+        ad.setTitle(R.string.alert);
+        ad.setMessage(R.string.alert_exit);
+        ad.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 clearStack();
                 Intent intent = new Intent(ActivityExercise.this, ActivityLesson.class);
-                intent.putExtra(NUMBER_KEY, title);
+                intent.putExtra(LESSON_KEY, title);
                 startActivity(intent);
             }
         });
-        ad.setNegativeButton(ConstantString.NO, new DialogInterface.OnClickListener() {
+        ad.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.cancel();
@@ -128,7 +129,7 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
             transactionManager = fragmentManager.beginTransaction();
             setExercise(exercises.get(0));
             buttonCheck = findViewById(R.id.buttonCheck);
-            buttonCheck.setText(ConstantString.CHECK);
+            buttonCheck.setText(R.string.check);
             buttonCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -139,19 +140,19 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
                         AlertDialog.Builder ad;
                         if(checkAnswer(exercise.getAnswer(), editText.getText().toString())){
                             ad = new AlertDialog.Builder(ActivityExercise.this, R.style.AlertCorrect);
-                            ad.setMessage(ConstantString.CORRECT);
+                            ad.setMessage(R.string.correct);
                         }
                         else {
                             ad = new AlertDialog.Builder(ActivityExercise.this, R.style.AlertWrong);
                             ad.setMessage(exercise.getAnswer());
                         }
-                        ad.setTitle(ConstantString.ANSWER);
+                        ad.setTitle(R.string.answer);
                         ad.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 checked = true;
                                 dialogInterface.cancel();
-                                buttonCheck.setText(ConstantString.NEXT);
+                                buttonCheck.setText(R.string.next);
                             }
                         });
                         final AlertDialog alert = ad.create();
@@ -161,11 +162,11 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
                             Exercise newExercise = exercises.get(exercises.size() - fragmentCounter + 1);
                             setExercise(newExercise);
                             checked = false;
-                            buttonCheck.setText(ConstantString.CHECK);
+                            buttonCheck.setText(R.string.check);
                             fragmentCounter--;
                         } else {
                             Intent intent = new Intent(ActivityExercise.this, ActivityLesson.class);
-                            intent.putExtra(NUMBER_KEY, title);
+                            intent.putExtra(LESSON_KEY, title);
                             startActivity(intent);
                         }
                     }
@@ -175,7 +176,7 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
     }
     private void setExercise(Exercise exercise) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("exercise", exercise);
+        bundle.putParcelable(EXERCISE_KEY, exercise);
         if (exercise.getType().equals(ConstantString.WORD_TYPE) || exercise.getType().equals(ConstantString.GRAMMAR_TYPE)) {
             FragmentExercise exerciseCommon = new FragmentExercise();
             exerciseCommon.setArguments(bundle);

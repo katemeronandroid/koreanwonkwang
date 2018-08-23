@@ -24,4 +24,20 @@
     <string name="in_russian">Введите слово на русском</string>
     <string name="save">Сохранить</string>
     <string name="OK">ОК</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="singin">Авторизация</string>
+    <string name="registration">Регистрация</string>
+    <string name="singout">Выйти из учетной записи</string>
+    <string name="user_name">Имя</string>
+    <string name="lesson">Урок</string>
+    <string name="lesson_closed">Урок закрыт</string>
+    <string name="answer">Ответ</string>
+    <string name="correct">Верно</string>
+    <string name="check">Проверить</string>
+    <string name="next">Далее</string>
+    <string name="alert">Предупреждение</string>
+    <string name="alert_exit">Вы уверены, что хотите прервать урок?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

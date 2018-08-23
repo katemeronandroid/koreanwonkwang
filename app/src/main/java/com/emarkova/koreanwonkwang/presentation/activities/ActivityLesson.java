@@ -15,7 +15,7 @@ import com.emarkova.koreanwonkwang.R;
 import com.emarkova.koreanwonkwang.helpers.ConstantString;
 
 public class ActivityLesson extends AppCompatActivity {
-    private static final String NUMBER_KEY = "number";
+    private static final String LESSON_KEY = "number";
     private static final String TYPE_KEY = "type";
     private FragmentManager fragmentManager;
     private FragmentTransaction transactionManager;
@@ -51,7 +51,7 @@ public class ActivityLesson extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentWords = new Intent(ActivityLesson.this, ActivityExercise.class);
-                intentWords.putExtra(NUMBER_KEY, title);
+                intentWords.putExtra(LESSON_KEY, title);
                 intentWords.putExtra(TYPE_KEY, ConstantString.WORD_TYPE);
                 startActivity(intentWords);
             }
@@ -61,7 +61,7 @@ public class ActivityLesson extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentGrammar = new Intent(ActivityLesson.this, ActivityExercise.class);
-                intentGrammar.putExtra(NUMBER_KEY, title);
+                intentGrammar.putExtra(LESSON_KEY, title);
                 intentGrammar.putExtra(TYPE_KEY,ConstantString.GRAMMAR_TYPE);
                 startActivity(intentGrammar);
             }
@@ -71,7 +71,7 @@ public class ActivityLesson extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intertAudio = new Intent(ActivityLesson.this, ActivityExercise.class);
-                intertAudio.putExtra(NUMBER_KEY, title);
+                intertAudio.putExtra(LESSON_KEY, title);
                 intertAudio.putExtra(TYPE_KEY, ConstantString.AUDIO_TYPE);
                 startActivity(intertAudio);
             }
@@ -81,7 +81,7 @@ public class ActivityLesson extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentTest = new Intent(ActivityLesson.this, ActivityTest.class);
-                intentTest.putExtra(NUMBER_KEY, title);
+                intentTest.putExtra(LESSON_KEY, title);
                 startActivity(intentTest);
             }
         });
@@ -91,7 +91,7 @@ public class ActivityLesson extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        toolbar.setTitle(ConstantString.LESSON + title);
+        toolbar.setTitle(R.string.lesson + " " + title);
         toolbar.setTitleTextColor(0xFFFFFFFF);
     }
 

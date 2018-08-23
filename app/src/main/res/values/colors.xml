@@ -8,4 +8,6 @@
     <color name="colorTranslateOutput">#5b40da9d</color>
     <color name="colorRight">#cc31ed5d</color>
     <color name="colorWrong">#ccf13844</color>
+    <color name="blue_800">#1565C0</color>
+    <color name="grey_50">#FAFAFA</color>
 </resources>

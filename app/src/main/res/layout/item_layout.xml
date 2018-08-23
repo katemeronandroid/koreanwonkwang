@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/item_width"
     android:layout_height="@dimen/item_height"
-    android:background="@android:color/holo_orange_light">
+    android:background="@color/colorTranslateInput">
 
     <TextView
         android:id="@+id/fileName"

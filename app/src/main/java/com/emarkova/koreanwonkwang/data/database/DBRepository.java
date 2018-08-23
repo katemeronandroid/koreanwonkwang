@@ -18,6 +18,9 @@ public interface DBRepository {
     public List<DataWord> getVocabulary();
     public void setTestResult(double result, String title);
     public void openLesson(String title);
+    public void closeLessons();
+    public void setNullResultLessons();
+    public void setLessonResult(String lesson, String result);
     public void setNewWord(String koWord, String ruWord);
     public void updateWord(DataWord dataWord);
     public void deleteWord(String id);

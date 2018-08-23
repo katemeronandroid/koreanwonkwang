@@ -10,7 +10,9 @@ import android.util.Log;
 
 import com.emarkova.koreanwonkwang.data.model.DataWord;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -39,7 +41,7 @@ public class DBHelperVocabulary extends SQLiteOpenHelper {
     }
 
     public void createTable(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE " + TABNAME + "(id integer PRIMARY KEY, ko_word text NOT NULL, ru_word text NOT NULL)");
+        sqLiteDatabase.execSQL("CREATE TABLE " + TABNAME + "(id datetime default current_timestamp PRIMARY KEY, ko_word text NOT NULL, ru_word text NOT NULL)");
     }
 
     public void deleteTable(SQLiteDatabase sqLiteDatabase) {
@@ -50,8 +52,10 @@ public class DBHelperVocabulary extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         try {
             database.beginTransaction();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            String date = sdf.format(new Date());
             ContentValues values = new ContentValues();
-            values.put("id",(new Random()).nextInt(Integer.MAX_VALUE));;
+            //values.put("id", date);
             values.put("ko_word", ko);
             values.put("ru_word", ru);
             database.insert(TABNAME, null, values);

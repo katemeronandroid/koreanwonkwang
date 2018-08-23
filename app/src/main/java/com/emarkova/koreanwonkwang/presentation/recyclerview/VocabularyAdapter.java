@@ -111,9 +111,9 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
                 @Override
                 public void onClick(View view) {
                     final AlertDialog.Builder ad = new AlertDialog.Builder(view.getContext());
-                    ad.setTitle(ConstantString.ALERT_TITLE);
+                    ad.setTitle(R.string.alert);
                     ad.setMessage(R.string.delete_word_alert);
-                    ad.setPositiveButton(ConstantString.YES, new DialogInterface.OnClickListener() {
+                    ad.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             VocabularyPresenter presenter = new VocabularyPresenterImp();
@@ -124,7 +124,7 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
                             dialogInterface.cancel();
                         }
                     });
-                    ad.setNegativeButton(ConstantString.NO, new DialogInterface.OnClickListener() {
+                    ad.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.cancel();

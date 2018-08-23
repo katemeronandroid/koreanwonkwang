@@ -48,6 +48,21 @@ public class DBManager implements DBRepository {
         lessonHelper.openLesson(title);
     }
 
+    @Override
+    public void closeLessons() {
+        lessonHelper.closeLessons();
+    }
+
+    @Override
+    public void setNullResultLessons() {
+        lessonHelper.setNullResultLessons();
+    }
+
+    @Override
+    public void setLessonResult(String lesson, String result) {
+        lessonHelper.setLessonResult(lesson, result);
+    }
+
     public void deleteLessonTable() {
         lessonHelper.deleteTables(lessonHelper.getReadableDatabase());
     }

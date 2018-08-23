@@ -3,14 +3,22 @@ package com.emarkova.koreanwonkwang.presentation.MVP;
 import android.util.Log;
 
 import com.emarkova.koreanwonkwang.CustomApplication;
+import com.emarkova.koreanwonkwang.DefaultPreferences;
+import com.emarkova.koreanwonkwang.data.FirebaseSync;
 import com.emarkova.koreanwonkwang.helpers.ConstantString;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.List;
 
 public class MVPPresenterImp implements MVPPresenter {
     private MVPModel mvpModel;
     private MVPView mvpView;
+    DefaultPreferences preferences;
 
     public MVPPresenterImp() {
-        this.mvpModel = new MVPModelImp(CustomApplication.getDBManager());
+        this.mvpModel = new MVPModelImp();
+        preferences = CustomApplication.getPreferences();
     }
 
     @Override
@@ -31,9 +39,35 @@ public class MVPPresenterImp implements MVPPresenter {
     @Override
     public void setTestResult(double result, String title) {
         mvpModel.setTestResult(result, title);
+        syncFirebaseLevelResult(result, String.valueOf(Integer.valueOf(title)));
         if(result > ConstantString.TEST_LEVEL) {
-            Log.d("Logs", "here");
-            mvpModel.openNewLesson(String.valueOf(Integer.valueOf(title) + 1));
+            if(Integer.valueOf(title) < Integer.valueOf(preferences.getUserPref().getUserLevel())) {
+                //просто обновляем
+                Log.d("Logs", "here");
+            }
+            else {
+                Log.d("Logs", "why here");
+                mvpModel.openNewLesson(String.valueOf(Integer.valueOf(title) + 1));
+                syncFirebaseLevel(String.valueOf(Integer.valueOf(title) + 1));
+                syncPreferences(String.valueOf(Integer.valueOf(title) + 1));
+            }
         }
+    }
+
+    private void syncFirebaseLevelResult(double result, String title) {
+        (new FirebaseSync()).syncFirebaseLevelResult(title, String.valueOf(result));
+    }
+
+    private void syncPreferences(String level) {
+        DefaultPreferences preferences = CustomApplication.getPreferences();
+        preferences.setUserLevel(level);
+    }
+
+    private void syncFirebaseLevel(String level) {
+        (new FirebaseSync()).syncFirebaseLevel(level);
+    }
+
+    public void openLessons(int level, List<String> results){
+        mvpModel.openLessons(level, results);
     }
 }

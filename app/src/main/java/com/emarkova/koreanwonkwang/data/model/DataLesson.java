@@ -1,5 +1,7 @@
 package com.emarkova.koreanwonkwang.data.model;
 
+import android.util.Log;
+
 public class DataLesson {
     private int number;
     private int open;
@@ -11,7 +13,7 @@ public class DataLesson {
     public DataLesson(String number, String open, String per, String desc){
         this.number = Integer.parseInt(number);
         this.open = Integer.parseInt(open);
-        this.per = Double.parseDouble(per);
+        this.per = Double.parseDouble(per.replace(",", "."));
         this.desc = desc;
     }
 

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.emarkova.koreanwonkwang.data.FirebaseSync;
 import com.emarkova.koreanwonkwang.data.model.DataLesson;
 import com.emarkova.koreanwonkwang.presentation.model.Lesson;
 
@@ -114,8 +115,10 @@ public class DBHelperLesson extends SQLiteOpenHelper {
                 {
                     String formattedDouble = String.format("%.2f", result);
                     ContentValues values = new ContentValues();
-                    values.put("per", String.valueOf(formattedDouble));
+                    values.put("per", String.valueOf(formattedDouble).replace(",", "."));
                     database.update(LESTABNAME, values, "num = ?", new String[] { les });
+                    //синхронизировать Firebase
+                    (new FirebaseSync()).syncFirebaseLevelResult(les, String.valueOf(result));
                 }
             }
             cursor.close();
@@ -130,6 +133,31 @@ public class DBHelperLesson extends SQLiteOpenHelper {
             database.close();
         }
     }
+
+    public void setLessonResult(String les, String result) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        try{
+            database.beginTransaction();
+            String query = "SELECT * FROM " + LESTABNAME + " WHERE num='"+ les + "'";
+            Cursor cursor = database.rawQuery(query, null);
+            if(cursor.moveToFirst()) {
+                ContentValues values = new ContentValues();
+                values.put("per", result.replace(",", "."));
+                database.update(LESTABNAME, values, "num = ?", new String[] { les });
+            }
+            cursor.close();
+            database.setTransactionSuccessful();
+        }
+        catch (SQLiteException e) {
+            Log.v("SQLiteException", e.getMessage());
+        }
+        finally {
+            if(database.inTransaction())
+                database.endTransaction();
+            database.close();
+        }
+    }
+
     public void openLesson(String les) {
         SQLiteDatabase database = this.getWritableDatabase();
         try{
@@ -149,4 +177,41 @@ public class DBHelperLesson extends SQLiteOpenHelper {
         }
     }
 
+    public void closeLessons() {
+        SQLiteDatabase database = this.getWritableDatabase();
+        try{
+            database.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put("open", String.valueOf(0));
+            database.update(LESTABNAME, values, null, null);
+            database.setTransactionSuccessful();
+        }
+        catch (SQLiteException e) {
+            Log.v("SQLiteException", e.getMessage());
+        }
+        finally {
+            if(database.inTransaction())
+                database.endTransaction();
+            database.close();
+        }
+    }
+
+    public void setNullResultLessons() {
+        SQLiteDatabase database = this.getWritableDatabase();
+        try{
+            database.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put("per", String.valueOf(0.0));
+            database.update(LESTABNAME, values, null, null);
+            database.setTransactionSuccessful();
+        }
+        catch (SQLiteException e) {
+            Log.v("SQLiteException", e.getMessage());
+        }
+        finally {
+            if(database.inTransaction())
+                database.endTransaction();
+            database.close();
+        }
+    }
 }

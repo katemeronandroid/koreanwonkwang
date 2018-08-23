@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "420669065451",
+    "firebase_url": "https://koreanwonkwang.firebaseio.com",
+    "project_id": "koreanwonkwang",
+    "storage_bucket": "koreanwonkwang.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420669065451:android:b74ea8cf9bd1f808",
+        "android_client_info": {
+          "package_name": "com.emarkova.koreanwonkwang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "420669065451-74vvhhl3smj4gksf86a46hbqvq0rt01q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAANH378OJXoRtBOoKM5vcFELBOIozFyC8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

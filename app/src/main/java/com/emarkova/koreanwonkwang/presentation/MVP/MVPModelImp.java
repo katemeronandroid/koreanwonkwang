@@ -1,10 +1,7 @@
 package com.emarkova.koreanwonkwang.presentation.MVP;
 
-import android.util.Log;
-
-import com.emarkova.koreanwonkwang.data.database.DBManager;
 import com.emarkova.koreanwonkwang.domain.usecases.GetExerciseList;
-import com.emarkova.koreanwonkwang.domain.usecases.GetLessonList;
+import com.emarkova.koreanwonkwang.domain.usecases.OpenLessons;
 import com.emarkova.koreanwonkwang.domain.usecases.SetTestResult;
 import com.emarkova.koreanwonkwang.presentation.model.Exercise;
 
@@ -12,7 +9,7 @@ import java.util.List;
 
 public class MVPModelImp implements MVPModel {
 
-    public MVPModelImp(DBManager manager) {
+    public MVPModelImp() {
     }
 
     @Override
@@ -33,5 +30,10 @@ public class MVPModelImp implements MVPModel {
     @Override
     public void openNewLesson(String title) {
         (new SetTestResult()).setOpenNextLessonToDB(title);
+    }
+
+    @Override
+    public void openLessons(int level, List<String> results) {
+        (new OpenLessons()).openLessons(level, results);
     }
 }

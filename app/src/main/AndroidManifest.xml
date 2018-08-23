@@ -13,20 +13,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.activities.ActivityLesson"/>
-        <activity android:name=".presentation.activities.ActivityTest"/>
-        <activity android:name=".presentation.activities.ActivityExercise"/>
-        <activity android:name=".presentation.activities.ActivityTranslate"/>
-        <activity android:name=".presentation.activities.ActivitySettings"/>
-        <activity android:name=".presentation.activities.ActivityVocabulary"/>
-        <activity android:name=".presentation.activities.ActivityAchievement"/>
+        <activity
+            android:name=".presentation.activities.ActivityLesson"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".presentation.activities.ActivityTest"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".presentation.activities.ActivityExercise"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".presentation.activities.ActivityTranslate"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".presentation.activities.ActivitySettings"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".presentation.activities.ActivityVocabulary"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".presentation.activities.ActivityAchievement"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".presentation.activities.ActivityLessonList"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".MyIntentService"

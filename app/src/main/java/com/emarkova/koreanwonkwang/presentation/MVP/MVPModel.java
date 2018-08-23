@@ -9,4 +9,5 @@ public interface MVPModel {
     List<Exercise> getTest(String title);
     void setTestResult(double result, String title);
     void openNewLesson(String title);
+    void openLessons(int level, List<String> results);
 }
