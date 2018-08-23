@@ -9,24 +9,86 @@
 1|words|Word 9|Description that can be long 9|Текст задания 9|Answer|0|none
 1|words|Word 10|Description that can be long 10|Текст задания 10|Answer|0|none
 1|words|Word 11|Description that can be long 11|Текст задания 11|Answer|1|none
-1|grammar|Grammar 1|Description that can be long 1|Текст задания 1|Answer1|0|none
-1|grammar|Grammar 2|Description that can be long 2|Текст задания 2|Answer2|0|none
-1|grammar|Grammar 3|Description that can be long 3|Текст задания 3|Answer3|1|none
-1|audio| Audio 1|Description that can be long 1|Текст задания 1|Answer1|0|20
-1|audio| Audio 2|Description that can be long 2|Текст задания 2|Answer2|0|21
-1|audio| Audio 13|Description that can be long 3|Текст задания 3|Answer3|1|22
-1|audio| Audio 23|Description that can be long 3|Текст задания 3|Answer3|1|22
-1|audio| Audio 33|Description that can be long 3|Текст задания 3|Answer3|1|22
-1|audio| Audio 43|Description that can be long 3|Текст задания 3|Answer3|1|22
-1|audio| Audio 53|Description that can be long 3|Текст задания 3|Answer3|1|22
-1|audio| Audio 63|Description that can be long 3|Текст задания 3|Answer3|1|22
-1|words|Word 91|Description that can be long 9|Текст задания 9|Answer|1|none
-1|words|Word 92|Description that can be long 9|Текст задания 9|Answer|1|none
-1|words|Word 39|Description that can be long 9|Текст задания 9|Answer|1|none
-1|words|Word 94|Description that can be long 9|Текст задания 9|Answer|1|none
-1|words|Word 95|Description that can be long 9|Текст задания 9|Answer|1|none
-1|words|Word 96|Description that can be long 9|Текст задания 9|Answer|1|none
-1|words|Word 97|Description that can be long 9|Текст задания 9|Answer|1|none
-1|words|Word 93|Description that can be long 9|Текст задания 9|Answer|1|none
-1|words|Word 92|Description that can be long 9|Текст задания 9|Answer|1|none
-1|words|Word 92|Description that can be long 9|Текст задания 9|Answer|1|none
+1|grammar|Grammar 1|Description that can be long 1|Текст задания 1|Answer|0|none
+1|grammar|Grammar 2|Description that can be long 2|Текст задания 2|Answer|0|none
+1|grammar|Grammar 3|Description that can be long 3|Текст задания 3|Answer|1|none
+1|audio| Audio 1|Description that can be long 1|Текст задания 1|Answer|0|20
+1|audio| Audio 2|Description that can be long 2|Текст задания 2|Answer|0|21
+1|audio| Audio 13|Description that can be long 3|Текст задания 3|Answer|1|22
+1|audio| Audio 23|Description that can be long 3|Текст задания 3|Answer|1|22
+1|audio| Audio 33|Description that can be long 3|Текст задания 3|Answer|1|22
+1|audio| Audio 43|Description that can be long 3|Текст задания 3|Answer|1|22
+1|audio| Audio 53|Description that can be long 3|Текст задания 3|Answer|1|22
+1|audio| Audio 63|Description that can be long 3|Текст задания 3|Answer|1|22
+1|words|Word 91|Description that can be long 91|Текст задания 91|Answer|1|none
+1|words|Word 92|Description that can be long 92|Текст задания 92|Answer|1|none
+1|words|Word 39|Description that can be long 93|Текст задания 93|Answer|1|none
+2|words|Word 1|Description that can be long 1|Текст задания 1|Answer|0|none
+2|words|Word 2|Description that can be long 2|Текст задания 2|Answer|0|none
+2|words|Word 3|Description that can be long 3|Текст задания 3|Answer|0|none
+2|words|Word 4|Description that can be long 4|Текст задания 4|Answer|0|none
+2|words|Word 5|Description that can be long 5|Текст задания 5|Answer|0|none
+2|words|Word 6|Description that can be long 6|Текст задания 6|Answer|0|none
+2|words|Word 7|Description that can be long 7|Текст задания 7|Answer|0|none
+2|words|Word 8|Description that can be long 8|Текст задания 8|Answer|0|none
+2|words|Word 9|Description that can be long 9|Текст задания 9|Answer|0|none
+2|words|Word 10|Description that can be long 10|Текст задания 10|Answer|0|none
+2|words|Word 11|Description that can be long 11|Текст задания 11|Answer|1|none
+2|grammar|Grammar 1|Description that can be long 1|Текст задания 1|Answer|0|none
+2|grammar|Grammar 2|Description that can be long 2|Текст задания 2|Answer|0|none
+2|grammar|Grammar 3|Description that can be long 3|Текст задания 3|Answer|1|none
+2|audio| Audio 1|Description that can be long 1|Текст задания 1|Answer|0|20
+2|audio| Audio 2|Description that can be long 2|Текст задания 2|Answer|0|21
+2|audio| Audio 13|Description that can be long 3|Текст задания 3|Answer|1|22
+2|audio| Audio 23|Description that can be long 3|Текст задания 3|Answer|1|22
+2|audio| Audio 33|Description that can be long 3|Текст задания 3|Answer|1|22
+2|audio| Audio 43|Description that can be long 3|Текст задания 3|Answer|1|22
+2|audio| Audio 53|Description that can be long 3|Текст задания 3|Answer|1|22
+2|audio| Audio 63|Description that can be long 3|Текст задания 3|Answer|1|22
+2|words|Word 91|Description that can be long 91|Текст задания 91|Answer|1|none
+2|words|Word 92|Description that can be long 92|Текст задания 92|Answer|1|none
+2|words|Word 39|Description that can be long 93|Текст задания 93|Answer|1|none
+2|words|Word 94|Description that can be long 94|Текст задания 94|Answer|1|none
+2|words|Word 95|Description that can be long 95|Текст задания 95|Answer|1|none
+2|words|Word 97|Description that can be long 96|Текст задания 96|Answer|1|none
+2|words|Word 93|Description that can be long 97|Текст задания 97|Answer|1|none
+2|words|Word 92|Description that can be long 98|Текст задания 98|Answer|1|none
+2|words|Word 92|Description that can be long 99|Текст задания 99|Answer|1|none
+2|words|Word 94|Description that can be long 94|Текст задания 94|Answer|1|none
+2|words|Word 95|Description that can be long 95|Текст задания 95|Answer|1|none
+2|words|Word 97|Description that can be long 96|Текст задания 96|Answer|1|none
+2|words|Word 93|Description that can be long 97|Текст задания 97|Answer|1|none
+2|words|Word 92|Description that can be long 98|Текст задания 98|Answer|1|none
+2|words|Word 92|Description that can be long 99|Текст задания 99|Answer|1|none
+3|words|Word 1|Description that can be long 1|Текст задания 1|Answer|0|none
+3|words|Word 2|Description that can be long 2|Текст задания 2|Answer|0|none
+3|words|Word 3|Description that can be long 3|Текст задания 3|Answer|0|none
+3|words|Word 4|Description that can be long 4|Текст задания 4|Answer|0|none
+3|words|Word 5|Description that can be long 5|Текст задания 5|Answer|0|none
+3|words|Word 6|Description that can be long 6|Текст задания 6|Answer|0|none
+3|words|Word 7|Description that can be long 7|Текст задания 7|Answer|0|none
+3|words|Word 8|Description that can be long 8|Текст задания 8|Answer|0|none
+3|words|Word 9|Description that can be long 9|Текст задания 9|Answer|0|none
+3|words|Word 10|Description that can be long 10|Текст задания 10|Answer|0|none
+3|words|Word 11|Description that can be long 11|Текст задания 11|Answer|1|none
+3|grammar|Grammar 1|Description that can be long 1|Текст задания 1|Answer|0|none
+3|grammar|Grammar 2|Description that can be long 2|Текст задания 2|Answer|0|none
+3|grammar|Grammar 3|Description that can be long 3|Текст задания 3|Answer|1|none
+3|audio| Audio 1|Description that can be long 1|Текст задания 1|Answer|0|20
+3|audio| Audio 2|Description that can be long 2|Текст задания 2|Answer|0|21
+3|audio| Audio 13|Description that can be long 3|Текст задания 3|Answer|1|22
+3|audio| Audio 23|Description that can be long 3|Текст задания 3|Answer|1|22
+3|audio| Audio 33|Description that can be long 3|Текст задания 3|Answer|1|22
+3|audio| Audio 43|Description that can be long 3|Текст задания 3|Answer|1|22
+3|audio| Audio 53|Description that can be long 3|Текст задания 3|Answer|1|22
+3|audio| Audio 63|Description that can be long 3|Текст задания 3|Answer|1|22
+3|words|Word 91|Description that can be long 91|Текст задания 91|Answer|1|none
+3|words|Word 92|Description that can be long 92|Текст задания 92|Answer|1|none
+3|words|Word 39|Description that can be long 93|Текст задания 93|Answer|1|none
+3|words|Word 94|Description that can be long 94|Текст задания 94|Answer|1|none
+3|words|Word 95|Description that can be long 95|Текст задания 95|Answer|1|none
+3|words|Word 97|Description that can be long 96|Текст задания 96|Answer|1|none
+3|words|Word 93|Description that can be long 97|Текст задания 97|Answer|1|none
+3|words|Word 92|Description that can be long 98|Текст задания 98|Answer|1|none
+3|words|Word 92|Description that can be long 99|Текст задания 99|Answer|1|none
+
