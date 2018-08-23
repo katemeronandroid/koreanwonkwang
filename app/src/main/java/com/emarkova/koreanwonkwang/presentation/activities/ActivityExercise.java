@@ -83,7 +83,7 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
     @Override
     protected void onResume() {
         super.onResume();
-        toolbar.setTitle(R.string.lesson+ " " + title);
+        toolbar.setTitle(ConstantString.LESSON + title);
     }
 
     private void clearStack(){

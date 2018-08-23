@@ -91,7 +91,7 @@ public class ActivityLesson extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        toolbar.setTitle(R.string.lesson + " " + title);
+        toolbar.setTitle(ConstantString.LESSON + title);
         toolbar.setTitleTextColor(0xFFFFFFFF);
     }
 

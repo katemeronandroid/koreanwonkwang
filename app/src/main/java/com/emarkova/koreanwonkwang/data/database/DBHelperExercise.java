@@ -55,6 +55,7 @@ public class DBHelperExercise extends SQLiteOpenHelper {
         try {
             database.beginTransaction();
             ContentValues values = new ContentValues();
+            Log.d("Logs", params.get(3));
            //"(id  les_num type word descr ques ans
             values.put("les_num", params.get(0));
             values.put("type", params.get(1));

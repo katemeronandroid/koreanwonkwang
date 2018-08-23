@@ -9,4 +9,5 @@ public interface MVPPresenter {
     void getTest(String title);
     void setTestResult(double result, String title);
     public void openLessons(int level, List<String> results);
+    public void openLessons();
 }

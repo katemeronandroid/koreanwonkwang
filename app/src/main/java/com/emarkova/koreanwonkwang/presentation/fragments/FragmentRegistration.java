@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,10 @@ import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenterImp;
 import com.emarkova.koreanwonkwang.presentation.activities.ActivityLessonList;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Arrays;
+
+import static java.util.Arrays.asList;
 
 public class FragmentRegistration extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;
@@ -45,9 +50,10 @@ public class FragmentRegistration extends Fragment {
                 preferences.setUserName(name.getText().toString());
                 myRef.child("users").child(userID).child("userName").setValue(name.getText().toString());
                 MVPPresenter presenter = new MVPPresenterImp();
-                presenter.openLessons(Integer.parseInt(preferences.getUserPref().getUserLevel()), preferences.getUserPref().getResults());
+                presenter.openLessons();
                 Intent intent = new Intent(getContext(), ActivityLessonList.class);
                 startActivity(intent);
+                Log.d("Logs", "tutututu");
             }
         });
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,11 +24,20 @@ import com.emarkova.koreanwonkwang.R;
 import com.emarkova.koreanwonkwang.data.database.DBManager;
 import com.emarkova.koreanwonkwang.domain.usecases.GetLessonList;
 import com.emarkova.koreanwonkwang.helpers.DataLoader;
+import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenter;
+import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenterImp;
 import com.emarkova.koreanwonkwang.presentation.helpers.RecyclerClickListiner;
 import com.emarkova.koreanwonkwang.presentation.helpers.SpaceItemDecoration;
 import com.emarkova.koreanwonkwang.presentation.model.Lesson;
 import com.emarkova.koreanwonkwang.presentation.model.UserInformation;
 import com.emarkova.koreanwonkwang.presentation.recyclerview.BaseAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
@@ -38,6 +48,8 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ActivityLessonList extends AppCompatActivity {
@@ -51,6 +63,9 @@ public class ActivityLessonList extends AppCompatActivity {
     private Toolbar toolbar;
     private Drawer.Result drawer;
     private DBManager manager; //убрать в конце
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference myRef;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +171,7 @@ public class ActivityLessonList extends AppCompatActivity {
     private AccountHeader.Result createAccountHeader(){
         UserInformation userInformation = defaultPreferences.getUserPref();
         IProfile profile = new ProfileDrawerItem()
-                .withName(userInformation.getUserName() + userInformation.getUserLevel())
+                .withName(userInformation.getUserName())
                 .withEmail(userInformation.getUserEmail())
                 .withIcon(getResources().getDrawable(R.drawable.account_icon));
         AccountHeader.Result accountHeader = new AccountHeader()
@@ -176,11 +191,11 @@ public class ActivityLessonList extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        final List<Lesson> lessonList = (new GetLessonList()).getLessonList();
         lessonRecyclerView = (RecyclerView)findViewById(R.id.lessonRecyclerList);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         lessonRecyclerView.setLayoutManager(layoutManager);
         lessonRecyclerView.addItemDecoration(new SpaceItemDecoration(SPACE));
+        final List<Lesson> lessonList = (new GetLessonList()).getLessonList();
         lessonAdapter = new BaseAdapter(lessonList);
         lessonRecyclerView.setAdapter(lessonAdapter);
         lessonRecyclerView.addOnItemTouchListener(new RecyclerClickListiner(this) {
@@ -192,6 +207,36 @@ public class ActivityLessonList extends AppCompatActivity {
                     intent.putExtra(LESSON_KEY, String.valueOf(position + 1));
                     startActivity(intent);
                 }
+            }
+        });
+    }
+
+    private void openLessons(){
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+        FirebaseUser user = getIntent().getParcelableExtra("user");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("Logs", "datashot LIST");
+                String userID = user.getUid();
+                defaultPreferences.setUserName(dataSnapshot.child("users").child(userID).child("userName").getValue().toString());
+                defaultPreferences.setUserLevel(dataSnapshot.child("users").child(userID).child("userLevel").getValue().toString());
+                String results = dataSnapshot.child("users").child(userID).child("results").getValue().toString()
+                        .replace("[", "").replace("]","").replace(" ","");
+                UserInformation userInformation = new UserInformation();
+                userInformation.setResults(Arrays.asList(results.split(",")));
+                MVPPresenter presenter = new MVPPresenterImp();
+                presenter.openLessons(Integer.parseInt(defaultPreferences.getUserPref().getUserLevel()), userInformation.getResults());
+                initDrawer();
+                initRecyclerView();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

@@ -46,13 +46,12 @@ public class FragmentSignIn extends Fragment {
     private EditText ETemail;
     private EditText ETpassword;
     private UserInformation userInformation;
-    private FragmentManager fragmentManager;
 
     private DefaultPreferences defaultPreferences;
     private static final String DEFAULT_PREF = "DEFAULT_PREF";
     private static final String USER_PREF = "USER_PREF";
     private static final String KEY_ID = "id";
-    private DBManager manager; //убрать в конце
+    private DBManager manager; // код для теста, убрать в конце
 
     @Nullable
     @Override
@@ -82,14 +81,14 @@ public class FragmentSignIn extends Fragment {
                 registration(ETemail.getText().toString(),ETpassword.getText().toString());
             }
         });
-        myRef.addValueEventListener(new ValueEventListener() {
+       /* myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("Logs", "datashot");
                 FirebaseUser user = mAuth.getCurrentUser();
                 String userID = user.getUid();
                 userInformation.setUserName(dataSnapshot.child("users").child(userID).child("userName").getValue().toString());
                 userInformation.setUserLevel(dataSnapshot.child("users").child(userID).child("userLevel").getValue().toString());
-                Log.d("Logs", dataSnapshot.child("users").child(userID).child("results").getValue().toString());
                 String results = dataSnapshot.child("users").child(userID).child("results").getValue().toString()
                                 .replace("[", "").replace("]","").replace(" ","");
                 userInformation.setResults(Arrays.asList(results.split(",")));
@@ -101,14 +100,14 @@ public class FragmentSignIn extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
-        manager = new DBManager(getContext());//убрать в конце
+        manager = new DBManager(getContext());// код для теста, убрать в конце
 
         //загрузчик
         defaultPreferences = CustomApplication.getPreferences();
 
-   /*   defaultPreferences.setBDDefined(false);
+   /*   defaultPreferences.setBDDefined(false); //код для теста
         manager.deleteLessonTable();
         manager.deleteExerciseTable();
         manager.deleteVocabularyTable();
@@ -136,23 +135,41 @@ public class FragmentSignIn extends Fragment {
         else if (password.equals(""))
             Toast.makeText(getContext(), "Введите пароль", Toast.LENGTH_SHORT).show();
         else {
+            mAuth.signInWithEmailAndPassword(email,password);
+            mAuth.signOut();
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(getContext(), "Aвторизация одобрена", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = mAuth.getCurrentUser();
-                        String userID = user.getUid();
-                        userInformation.setUserId(user.getUid());
-                        userInformation.setUserEmail(email);
-                        defaultPreferences.setUserPref(userInformation);
-                        //Открыть уроки
-//                        MVPPresenter presenter = new MVPPresenterImp();
-//                        presenter.openLessons(Integer.parseInt(userInformation.getUserLevel()));
-                        //
-                        Intent intent = new Intent(getContext(), ActivityLessonList.class);
-                        startActivity(intent);
-                        clearStack();
+                        myRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                UserInformation userInformation = new UserInformation();
+                                String userID = user.getUid();
+                                userInformation.setUserId(user.getUid());
+                                userInformation.setUserEmail(email);
+                                userInformation.setUserName(dataSnapshot.child("users").child(userID).child("userName").getValue().toString());
+                                userInformation.setUserLevel(dataSnapshot.child("users").child(userID).child("userLevel").getValue().toString());
+                                String results = dataSnapshot.child("users").child(userID).child("results").getValue().toString()
+                                        .replace("[", "").replace("]","").replace(" ","");
+                                userInformation.setResults(Arrays.asList(results.split(",")));
+                                MVPPresenter presenter = new MVPPresenterImp();
+                                presenter.openLessons(Integer.parseInt(userInformation.getUserLevel()), userInformation.getResults());
+
+
+                                defaultPreferences.setUserPref(userInformation);
+                                Intent intent = new Intent(getContext(), ActivityLessonList.class);
+                                startActivity(intent);
+                                clearStack();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     } else
                         Toast.makeText(getContext(), "В авторизации отказано", Toast.LENGTH_SHORT).show();
 

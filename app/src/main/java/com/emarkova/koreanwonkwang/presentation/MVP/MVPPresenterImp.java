@@ -9,6 +9,7 @@ import com.emarkova.koreanwonkwang.helpers.ConstantString;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MVPPresenterImp implements MVPPresenter {
@@ -69,5 +70,12 @@ public class MVPPresenterImp implements MVPPresenter {
 
     public void openLessons(int level, List<String> results){
         mvpModel.openLessons(level, results);
+    }
+
+    @Override
+    public void openLessons() {
+        List<String> result = new ArrayList<>(1);
+        result.add("0.0");
+        mvpModel.openLessons(1, result);
     }
 }
