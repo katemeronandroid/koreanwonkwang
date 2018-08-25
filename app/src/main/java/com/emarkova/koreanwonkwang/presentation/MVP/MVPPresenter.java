@@ -1,4 +1,4 @@
-package com.emarkova.koreanwonkwang.presentation.MVP;
+package com.emarkova.koreanwonkwang.presentation.mvp;
 
 import java.util.List;
 
@@ -10,4 +10,5 @@ public interface MVPPresenter {
     void setTestResult(double result, String title);
     public void openLessons(int level, List<String> results);
     public void openLessons();
+    public void syncFirebaseResults();
 }

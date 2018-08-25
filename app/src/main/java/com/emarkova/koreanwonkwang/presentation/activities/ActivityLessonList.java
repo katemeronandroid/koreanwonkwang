@@ -1,6 +1,5 @@
 package com.emarkova.koreanwonkwang.presentation.activities;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,21 +10,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 
 import com.emarkova.koreanwonkwang.DefaultPreferences;
 import com.emarkova.koreanwonkwang.MainActivity;
 import com.emarkova.koreanwonkwang.R;
 import com.emarkova.koreanwonkwang.data.database.DBManager;
+import com.emarkova.koreanwonkwang.domain.FirebaseSync;
 import com.emarkova.koreanwonkwang.domain.usecases.GetLessonList;
-import com.emarkova.koreanwonkwang.helpers.DataLoader;
-import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenter;
-import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenterImp;
+import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenter;
+import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenterImp;
 import com.emarkova.koreanwonkwang.presentation.helpers.RecyclerClickListiner;
 import com.emarkova.koreanwonkwang.presentation.helpers.SpaceItemDecoration;
 import com.emarkova.koreanwonkwang.presentation.model.Lesson;
@@ -48,7 +45,6 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -145,18 +141,19 @@ public class ActivityLessonList extends AppCompatActivity {
                             AlertDialog alert = builder.create();
                             alert.show();
                         }
+                        else if(drawerItem.getIdentifier() == 1) {
+                            MVPPresenterImp presenter = new MVPPresenterImp();
+                            presenter.syncFirebaseResults();
+                        }
                         else {
                             Intent intent;
                             switch (drawerItem.getIdentifier()){
-                                case 1:
-                                    intent = new Intent(getApplicationContext(), ActivityAchievement.class);
-                                    startActivity(intent);
-                                    break;
                                 case 2:
                                     intent = new Intent(getApplicationContext(), ActivityVocabulary.class);
                                     startActivity(intent);
                                     break;
                                 case 3:
+                                    (new FirebaseSync()).syncFirebaseUserStatus();
                                     defaultPreferences.signoutUser();
                                     intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
@@ -183,7 +180,7 @@ public class ActivityLessonList extends AppCompatActivity {
     }
 
     private IDrawerItem[] initDrawerItems() {
-        return new IDrawerItem[]{new PrimaryDrawerItem().withName(R.string.my_achievements).withIcon(FontAwesome.Icon.faw_diamond).withIdentifier(1),
+        return new IDrawerItem[]{new PrimaryDrawerItem().withName(R.string.sync).withIcon(FontAwesome.Icon.faw_exchange).withIdentifier(1),
                 new PrimaryDrawerItem().withName(R.string.my_vocabulary).withIcon(FontAwesome.Icon.faw_book).withIdentifier(2),
                 new SecondaryDrawerItem().withName(R.string.singout).withIcon(FontAwesome.Icon.faw_sign_out).withIdentifier(3),
                 new DividerDrawerItem(),

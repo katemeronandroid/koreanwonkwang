@@ -14,15 +14,11 @@ import android.widget.EditText;
 
 import com.emarkova.koreanwonkwang.DefaultPreferences;
 import com.emarkova.koreanwonkwang.R;
-import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenter;
-import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenterImp;
+import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenter;
+import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenterImp;
 import com.emarkova.koreanwonkwang.presentation.activities.ActivityLessonList;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Arrays;
-
-import static java.util.Arrays.asList;
 
 public class FragmentRegistration extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;

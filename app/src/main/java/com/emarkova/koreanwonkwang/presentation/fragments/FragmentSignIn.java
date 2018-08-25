@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +18,8 @@ import com.emarkova.koreanwonkwang.DefaultPreferences;
 import com.emarkova.koreanwonkwang.R;
 import com.emarkova.koreanwonkwang.data.database.DBManager;
 import com.emarkova.koreanwonkwang.helpers.DataLoader;
-import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenter;
-import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenterImp;
+import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenter;
+import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenterImp;
 import com.emarkova.koreanwonkwang.presentation.activities.ActivityLessonList;
 import com.emarkova.koreanwonkwang.presentation.model.UserInformation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -163,6 +161,7 @@ public class FragmentSignIn extends Fragment {
                                 Intent intent = new Intent(getContext(), ActivityLessonList.class);
                                 startActivity(intent);
                                 clearStack();
+                                myRef.removeEventListener(this);
                             }
 
                             @Override
@@ -170,6 +169,7 @@ public class FragmentSignIn extends Fragment {
 
                             }
                         });
+
                     } else
                         Toast.makeText(getContext(), "В авторизации отказано", Toast.LENGTH_SHORT).show();
 

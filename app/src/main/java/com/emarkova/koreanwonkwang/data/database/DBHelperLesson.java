@@ -8,9 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.emarkova.koreanwonkwang.data.FirebaseSync;
 import com.emarkova.koreanwonkwang.data.model.DataLesson;
-import com.emarkova.koreanwonkwang.presentation.model.Lesson;
 
 import java.util.ArrayList;
 
@@ -86,6 +84,7 @@ public class DBHelperLesson extends SQLiteOpenHelper {
             if(database.inTransaction())
                 database.endTransaction();
             database.close();
+            database = null;
         }
         return result;
     }
@@ -117,8 +116,6 @@ public class DBHelperLesson extends SQLiteOpenHelper {
                     ContentValues values = new ContentValues();
                     values.put("per", String.valueOf(formattedDouble).replace(",", "."));
                     database.update(LESTABNAME, values, "num = ?", new String[] { les });
-                    //синхронизировать Firebase
-                    (new FirebaseSync()).syncFirebaseLevelResult(les, String.valueOf(result));
                 }
             }
             cursor.close();

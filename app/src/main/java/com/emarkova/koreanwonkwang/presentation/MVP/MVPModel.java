@@ -1,4 +1,4 @@
-package com.emarkova.koreanwonkwang.presentation.MVP;
+package com.emarkova.koreanwonkwang.presentation.mvp;
 
 import com.emarkova.koreanwonkwang.presentation.model.Exercise;
 

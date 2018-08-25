@@ -2,7 +2,6 @@ package com.emarkova.koreanwonkwang.presentation.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -10,21 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.emarkova.koreanwonkwang.R;
-import com.emarkova.koreanwonkwang.domain.usecases.GetVocabularyList;
-import com.emarkova.koreanwonkwang.domain.usecases.SetNewWord;
-import com.emarkova.koreanwonkwang.helpers.ConstantString;
-import com.emarkova.koreanwonkwang.presentation.MVP.MVPVocabularyView;
-import com.emarkova.koreanwonkwang.presentation.MVP.VocabularyPresenter;
-import com.emarkova.koreanwonkwang.presentation.MVP.VocabularyPresenterImp;
+import com.emarkova.koreanwonkwang.presentation.mvp.MVPVocabularyView;
+import com.emarkova.koreanwonkwang.presentation.mvp.VocabularyPresenter;
+import com.emarkova.koreanwonkwang.presentation.mvp.VocabularyPresenterImp;
 import com.emarkova.koreanwonkwang.presentation.model.Word;
 import com.emarkova.koreanwonkwang.presentation.recyclerview.VocabularyAdapter;
 
