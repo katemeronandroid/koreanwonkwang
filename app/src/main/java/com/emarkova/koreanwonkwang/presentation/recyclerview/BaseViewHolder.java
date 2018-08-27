@@ -12,7 +12,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public TextView lessonTheme;
     public BaseViewHolder(@NonNull View itemView) {
         super(itemView);
-        lessonName = (TextView)itemView.findViewById(R.id.fileName);
-        lessonTheme = (TextView)itemView.findViewById(R.id.fileDesc);
+        lessonName = itemView.findViewById(R.id.fileName);
+        lessonTheme = itemView.findViewById(R.id.fileDesc);
     }
 }

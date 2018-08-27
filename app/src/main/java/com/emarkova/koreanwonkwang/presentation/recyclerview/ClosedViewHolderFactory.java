@@ -11,7 +11,6 @@ public class ClosedViewHolderFactory implements ViewHolderFactory {
     @Override
     public RecyclerView.ViewHolder createViewHolder(ViewGroup parent, LayoutInflater inflater) {
         View itemView = inflater.inflate(R.layout.closed_item_layout, parent, false);
-        RecyclerView.ViewHolder holder = new ClosedViewHolder(itemView);
-        return holder;
+        return new ClosedViewHolder(itemView);
     }
 }

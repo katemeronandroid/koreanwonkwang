@@ -51,7 +51,7 @@ public class FragmentAudio extends Fragment {
     private void playAudio(String fileName) {
         String path = "audio/"+fileName+".mp3";
         try {
-            AssetFileDescriptor descriptor = getActivity().getAssets().openFd(path);
+            AssetFileDescriptor descriptor = getContext().getAssets().openFd(path);
             mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
             mediaPlayer.prepare();
             mediaPlayer.start();

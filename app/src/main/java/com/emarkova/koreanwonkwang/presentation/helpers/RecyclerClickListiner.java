@@ -24,7 +24,7 @@ public abstract class RecyclerClickListiner implements RecyclerView.OnItemTouchL
         if (gestureDetector.onTouchEvent(e)) {
             View clickedChild = rv.findChildViewUnder(e.getX(), e.getY());
             if (clickedChild != null && !clickedChild.dispatchTouchEvent(e)) {
-                int clickedPosition = rv.getChildPosition(clickedChild);
+                int clickedPosition = rv.getChildAdapterPosition(clickedChild);
                 if (clickedPosition != RecyclerView.NO_POSITION) {
                     onItemClick(rv, clickedChild, clickedPosition);
                     return true;

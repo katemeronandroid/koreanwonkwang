@@ -21,11 +21,10 @@ import java.util.List;
 
 public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocabularyView{
     public static boolean editMode = false;
-    private List<Word> mData;
+    private final List<Word> mData;
 
     public VocabularyAdapter(List<Word> list) {
         this.mData = list;
-        //Log.d("Logs", String.valueOf(mData.size()));
     }
 
     @NonNull
@@ -46,11 +45,11 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
         if(editMode) {
             holder.imageEdit.setVisibility(View.VISIBLE);
             holder.imageDelete.setVisibility(View.VISIBLE);
-            ActivityVocabulary.setFABVisibility(View.INVISIBLE);
+            ActivityVocabulary.setFABVisibility(View.GONE);
         }
         else {
-            holder.imageEdit.setVisibility(View.INVISIBLE);
-            holder.imageDelete.setVisibility(View.INVISIBLE);
+            holder.imageEdit.setVisibility(View.GONE);
+            holder.imageDelete.setVisibility(View.GONE);
             ActivityVocabulary.setFABVisibility(View.VISIBLE);
         }
     }
@@ -70,85 +69,62 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
         private ImageView imageDelete;
         private Word word;
         private int position;
-        public VocabularyViewHolder(@NonNull final View itemView) {
+        VocabularyViewHolder(@NonNull final View itemView) {
             super(itemView);
-            koWord = (TextView)itemView.findViewById(R.id.textKo);
-            ruWord = (TextView)itemView.findViewById(R.id.textRu);
-            imageEdit = (ImageView)itemView.findViewById(R.id.editImage);
-            imageDelete = (ImageView)itemView.findViewById(R.id.deleteImage);
+            koWord = itemView.findViewById(R.id.textKo);
+            ruWord = itemView.findViewById(R.id.textRu);
+            imageEdit = itemView.findViewById(R.id.editImage);
+            imageDelete = itemView.findViewById(R.id.deleteImage);
             initListeners();
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    if(editMode) {
-                        editMode = false;
-                        notifyDataSetChanged();
-                    }
-                    else {
-                        editMode = true;
-                        notifyDataSetChanged();
-                    }
-                    return false;
+            itemView.setOnLongClickListener((View view) -> {
+                if(editMode) {
+                    editMode = false;
+                    notifyDataSetChanged();
                 }
+                else {
+                    editMode = true;
+                    notifyDataSetChanged();
+                }
+                return false;
             });
         }
 
         private void initListeners() {
-            imageDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final AlertDialog.Builder ad = new AlertDialog.Builder(view.getContext());
-                    ad.setTitle(R.string.alert);
-                    ad.setMessage(R.string.delete_word_alert);
-                    ad.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            VocabularyPresenterImp presenter = new VocabularyPresenterImp();
-                            presenter.deleteWord(word.getId());
-                            mData.remove(position);
-                            notifyItemRemoved(position);
-                            notifyItemRangeChanged(position, mData.size());
-                            dialogInterface.cancel();
-                        }
-                    });
-                    ad.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
-                        }
-                    });
-                    AlertDialog alert = ad.create();
-                    alert.show();
-                }
+            imageDelete.setOnClickListener(view -> {
+                new AlertDialog.Builder(view.getContext())
+                .setTitle(R.string.alert)
+                .setMessage(R.string.delete_word_alert)
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+                    VocabularyPresenterImp presenter = new VocabularyPresenterImp();
+                    presenter.deleteWord(word.getId());
+                    mData.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, mData.size());
+                    dialogInterface.cancel();
+                })
+                .setNegativeButton(R.string.no, (dialogInterface, i) -> dialogInterface.cancel()).show();
             });
-            imageEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    LayoutInflater inflater = LayoutInflater.from(view.getContext());
-                    View layout = inflater.inflate(R.layout.dialog_add_word, null);
-                    final EditText koWord = (EditText)layout.findViewById(R.id.koreanInputDialog);
-                    final EditText ruWord = (EditText)layout.findViewById(R.id.russianInputDialog);
-                    koWord.setText(word.getKoWord());
-                    ruWord.setText(word.getRuWord());
-                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setView(layout);
-                    builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            word.setKoWord(koWord.getText().toString());
-                            word.setRuWord(ruWord.getText().toString());
-                            notifyItemChanged(position);
-                            VocabularyPresenterImp presenter = new VocabularyPresenterImp();
-                            presenter.updateWord(word);
-                            dialogInterface.cancel();
-                        }
-                    });
-                    builder.create().show();
-                }
+            imageEdit.setOnClickListener(view -> {
+                LayoutInflater inflater = LayoutInflater.from(view.getContext());
+                View layout = inflater.inflate(R.layout.dialog_add_word, null);
+                final EditText koWord = layout.findViewById(R.id.koreanInputDialog);
+                final EditText ruWord = layout.findViewById(R.id.russianInputDialog);
+                koWord.setText(word.getKoWord());
+                ruWord.setText(word.getRuWord());
+                new AlertDialog.Builder(view.getContext())
+                .setView(layout)
+                .setPositiveButton(R.string.save, (dialogInterface, i) -> {
+                    word.setKoWord(koWord.getText().toString());
+                    word.setRuWord(ruWord.getText().toString());
+                    notifyItemChanged(position);
+                    VocabularyPresenterImp presenter = new VocabularyPresenterImp();
+                    presenter.updateWord(word);
+                    dialogInterface.cancel();
+                }).show();
             });
         }
 
-        public void setPosition(int position) {
+        void setPosition(int position) {
             this.position = position;
         }
 

@@ -12,7 +12,7 @@ public class ClosedViewHolder extends RecyclerView.ViewHolder {
     public TextView lessonTheme;
     public ClosedViewHolder(@NonNull View itemView) {
         super(itemView);
-        lessonName = (TextView)itemView.findViewById(R.id.closedfileName);
-        lessonTheme = (TextView)itemView.findViewById(R.id.closedfileDesc);
+        lessonName = itemView.findViewById(R.id.closedfileName);
+        lessonTheme = itemView.findViewById(R.id.closedfileDesc);
     }
 }

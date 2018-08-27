@@ -13,9 +13,9 @@ import com.emarkova.koreanwonkwang.presentation.model.Lesson;
 import java.util.List;
 
 public class BaseAdapter extends RecyclerView.Adapter {
-    List<Lesson> mList;
+    private final List<Lesson> mList;
+    private final SparseArray<ViewHolderFactory> mFactoryMap;
 
-    SparseArray<ViewHolderFactory> mFactoryMap;
     public BaseAdapter(List<Lesson> list) {
         this.mList = list;
         mFactoryMap = new SparseArray<>();

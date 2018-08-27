@@ -8,32 +8,32 @@ import com.emarkova.koreanwonkwang.presentation.model.Exercise;
 import java.util.List;
 
 public class MVPModelImp implements MVPModel {
-
-    public MVPModelImp() {
-    }
+    private final GetExerciseList modelGetExerciseList = new GetExerciseList();
+    private final SetTestResult modelSetTestResult = new SetTestResult();
+    private final OpenLessons modelOpenLessons = new OpenLessons();
 
     @Override
     public List<Exercise> getListOfExercise(String title, String type) {
-        return (new GetExerciseList()).getExerciseList(title, type);
+        return modelGetExerciseList.getExerciseList(title, type);
     }
 
     @Override
     public List<Exercise> getTest(String title) {
-        return (new GetExerciseList()).getTest(title);
+        return modelGetExerciseList.getTest(title);
     }
 
     @Override
     public void setTestResult(double result, String title) {
-        (new SetTestResult()).setTestResultToDB(result, title);
+        modelSetTestResult.setTestResultToDB(result, title);
     }
 
     @Override
     public void openNewLesson(String title) {
-        (new SetTestResult()).setOpenNextLessonToDB(title);
+        modelSetTestResult.setOpenNextLessonToDB(title);
     }
 
     @Override
     public void openLessons(int level, List<String> results) {
-        (new OpenLessons()).openLessons(level, results);
+        modelOpenLessons.openLessons(level, results);
     }
 }

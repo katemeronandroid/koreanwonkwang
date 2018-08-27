@@ -18,6 +18,7 @@ public class MVPPresenterImp {
     private MVPModel mvpModel;
     private MVPView mvpView;
     private DefaultPreferences preferences;
+    private final GetLessonList getterLessonList = new GetLessonList();
 
     public MVPPresenterImp() {
         this.mvpModel = new MVPModelImp();
@@ -40,24 +41,14 @@ public class MVPPresenterImp {
         mvpModel.setTestResult(result, title);
         if(result > ConstantString.TEST_LEVEL) {
             if(Integer.valueOf(title) >= Integer.valueOf(preferences.getUserPref().getUserLevel())) {
-                Log.d("Logs", "why here");
                 mvpModel.openNewLesson(String.valueOf(Integer.valueOf(title) + 1));
-                //syncFirebaseLevel(String.valueOf(Integer.valueOf(title) + 1));
                 syncPreferences(String.valueOf(Integer.valueOf(title) + 1));
             }
         }
     }
 
-    private void syncFirebaseLevelResult(double result, String title) {
-        (new FirebaseSync(((Context) mvpView))).syncFirebaseLevelResult(title, String.valueOf(result));
-    }
-
     private void syncPreferences(String level) {
         preferences.setUserLevel(level);
-    }
-
-    private void syncFirebaseLevel(String level) {
-        (new FirebaseSync((Context) mvpView)).syncFirebaseLevel(level);
     }
 
     public void openLessons(int level, List<String> results){
@@ -75,7 +66,7 @@ public class MVPPresenterImp {
     }
 
     public List<Lesson> getLessons() {
-        return (new GetLessonList()).getLessonList();
+        return getterLessonList.getLessonList();
     }
 
 }
