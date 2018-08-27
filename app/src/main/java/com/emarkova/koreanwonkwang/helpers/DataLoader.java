@@ -26,7 +26,7 @@ public class DataLoader {
 
     public DataLoader(Context context) {
         assetManager = context.getAssets();
-        manager = ((CustomApplication) context).getDBManager();
+        manager = CustomApplication.getDBManager();
     }
 
     /**
