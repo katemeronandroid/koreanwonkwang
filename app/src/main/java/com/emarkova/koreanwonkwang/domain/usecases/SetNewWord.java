@@ -7,7 +7,7 @@ import com.emarkova.koreanwonkwang.data.database.DBRepository;
 import com.emarkova.koreanwonkwang.data.model.DataWord;
 
 public class SetNewWord {
-    DBRepository repository;
+    private final DBRepository repository;
 
     public SetNewWord() {
         repository = CustomApplication.getDBManager();

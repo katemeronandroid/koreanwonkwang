@@ -9,7 +9,7 @@ import com.emarkova.koreanwonkwang.presentation.model.Word;
 import java.util.List;
 
 public class GetVocabularyList {
-    DBRepository repository;
+    public final DBRepository repository;
 
     public GetVocabularyList() {
         repository = CustomApplication.getDBManager();

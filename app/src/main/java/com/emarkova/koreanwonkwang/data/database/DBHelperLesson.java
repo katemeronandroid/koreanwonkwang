@@ -14,13 +14,13 @@ import java.util.ArrayList;
 
 public class DBHelperLesson extends SQLiteOpenHelper {
     private static final String LESTABNAME = "LESSON";
-    private static final String DB_NAME = "weather_database";
+    private static final String DB_NAME = "korean_database";
     private static final int VERSION_DB = 1;
 
-    public DBHelperLesson(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    DBHelperLesson(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
-    public DBHelperLesson(Context context) {
+    DBHelperLesson(Context context) {
 
         this(context, DB_NAME, null, VERSION_DB);
     }
@@ -35,7 +35,6 @@ public class DBHelperLesson extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        //createTables(sqLiteDatabase);
     }
 
     @Override
@@ -48,7 +47,6 @@ public class DBHelperLesson extends SQLiteOpenHelper {
         try {
             database.beginTransaction();
             ContentValues values = new ContentValues();
-            //num, open, per, desc
             values.put("num", num);
             values.put("open", open);
             values.put("per", per);

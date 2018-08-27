@@ -9,7 +9,7 @@ import com.emarkova.koreanwonkwang.presentation.model.Exercise;
 import java.util.List;
 
 public class GetExerciseList {
-    DBRepository repository;
+    private final DBRepository repository;
 
     public GetExerciseList() {repository = CustomApplication.getDBManager();}
 

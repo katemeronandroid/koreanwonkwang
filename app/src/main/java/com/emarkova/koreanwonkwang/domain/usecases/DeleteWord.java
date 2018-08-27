@@ -4,7 +4,7 @@ import com.emarkova.koreanwonkwang.CustomApplication;
 import com.emarkova.koreanwonkwang.data.database.DBRepository;
 
 public class DeleteWord {
-    DBRepository repository;
+    private final DBRepository repository;
 
     public DeleteWord() {
         repository = CustomApplication.getDBManager();

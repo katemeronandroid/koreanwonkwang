@@ -21,14 +21,14 @@ import java.util.Random;
 public class DBHelperExercise extends SQLiteOpenHelper {
     private static final String LESTABNAME = "LESSON";
     private static final String EXTABNAME = "EXERCISE";
-    private static final String DB_NAME = "weather_database";
+    private static final String DB_NAME = "korean_database";
     private static final int VERSION_DB = 1;
 
-    public DBHelperExercise(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    DBHelperExercise(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
-    public DBHelperExercise(Context context) {
+    DBHelperExercise(Context context) {
         this(context, DB_NAME, null, VERSION_DB);
     }
 
@@ -43,7 +43,6 @@ public class DBHelperExercise extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        //createTables(sqLiteDatabase);
     }
 
     @Override
@@ -56,7 +55,6 @@ public class DBHelperExercise extends SQLiteOpenHelper {
             database.beginTransaction();
             ContentValues values = new ContentValues();
             Log.d("Logs", params.get(3));
-           //"(id  les_num type word descr ques ans
             values.put("les_num", params.get(0));
             values.put("type", params.get(1));
             values.put("word", params.get(2));
@@ -83,8 +81,6 @@ public class DBHelperExercise extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         try{
             database.beginTransaction();
-            //String [] columns = new String[] { "les_num", "type", "word", "descr", "ques", "ans" };//les_num type word descr ques ans
-            //Cursor cursor = database.query(EXTABNAME, columns, null, null, null, null, null);
             String query = "SELECT * FROM " + EXTABNAME + " WHERE les_num='"+ les + "' AND type ='" + type +"' AND test = '0'";
             Cursor cursor = database.rawQuery(query, null);
             result = parceExerciseList(cursor);
@@ -124,12 +120,11 @@ public class DBHelperExercise extends SQLiteOpenHelper {
     }
 
     public ArrayList<DataExercise> getTestList(String les) {
-        ArrayList<DataExercise> result = new ArrayList<>();
+        ArrayList<DataExercise> result;
         ArrayList<DataExercise> allExercises = new ArrayList<>();
         SQLiteDatabase database = this.getWritableDatabase();
         try{
             database.beginTransaction();
-            //String [] columns = new String[] { "les_num", "type", "word", "descr", "ques", "ans" };//les_num type word descr ques ans
             String query = "SELECT * FROM " + EXTABNAME + " WHERE les_num='"+ les + "' AND test = '1'";
             Cursor cursor = database.rawQuery(query, null);
             allExercises = parceExerciseList(cursor);

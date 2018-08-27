@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBManager implements DBRepository {
-    DBHelperLesson lessonHelper;
-    DBHelperExercise exerciseHelper;
-    DBHelperVocabulary vocabularyHelper;
+    private final DBHelperLesson lessonHelper;
+    private final DBHelperExercise exerciseHelper;
+    private final DBHelperVocabulary vocabularyHelper;
 
     public DBManager(Context context) {
         this.lessonHelper = new DBHelperLesson(context);

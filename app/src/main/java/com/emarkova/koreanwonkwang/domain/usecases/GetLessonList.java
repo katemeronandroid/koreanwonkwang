@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetLessonList {
-    DBRepository repository;
+    private final DBRepository repository;
 
     public GetLessonList() {repository = CustomApplication.getDBManager();}
 

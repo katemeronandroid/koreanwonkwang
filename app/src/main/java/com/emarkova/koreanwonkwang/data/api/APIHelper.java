@@ -6,27 +6,22 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 
 public class APIHelper {
     private static RetrofitHelper retrofit = null;
-    final private String KEY = "trnsl.1.1.20180726T061141Z.a14801d917a62a95.c00d63f843382ca8309b1309fd246f75526b20a1";
+    private static final String KEY = "trnsl.1.1.20180726T061141Z.a14801d917a62a95.c00d63f843382ca8309b1309fd246f75526b20a1";
     private static final String KOREAN = "ko";
     private static final String RUSSIAN = "ru";
     private Object translateResponse = null;
     private String language;
 
     public APIHelper(String text, String lang) {
-        this.retrofit = new RetrofitHelper();
+        retrofit = new RetrofitHelper();
 
     }
 
@@ -61,7 +56,7 @@ public class APIHelper {
             return textSend;
     }
 
-    public String getLanguage(String textSend) {
+    private String getLanguage(String textSend) {
         try {
             Response<Object> response = retrofit.getServer().getLang(KEY,textSend).execute();
             translateResponse = response.body();
@@ -79,7 +74,7 @@ public class APIHelper {
         return this.language;
     }
 
-    public Object getTranslateResponse() {
+    private Object getTranslateResponse() {
         return translateResponse;
     }
 

@@ -7,7 +7,7 @@ import com.emarkova.koreanwonkwang.domain.mappers.DomainViewWordMapper;
 import com.emarkova.koreanwonkwang.presentation.model.Word;
 
 public class UpdateWord {
-    DBRepository repository;
+    private final DBRepository repository;
 
     public UpdateWord() {
         repository = CustomApplication.getDBManager();

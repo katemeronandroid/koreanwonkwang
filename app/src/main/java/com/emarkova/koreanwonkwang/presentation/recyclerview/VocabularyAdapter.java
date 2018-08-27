@@ -22,9 +22,11 @@ import java.util.List;
 public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocabularyView{
     public static boolean editMode = false;
     private final List<Word> mData;
+    private final VocabularyPresenterImp presenter;
 
-    public VocabularyAdapter(List<Word> list) {
+    public VocabularyAdapter(List<Word> list, VocabularyPresenterImp presenter) {
         this.mData = list;
+        this.presenter = presenter;
     }
 
     @NonNull
@@ -95,11 +97,9 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
                 .setTitle(R.string.alert)
                 .setMessage(R.string.delete_word_alert)
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
-                    VocabularyPresenterImp presenter = new VocabularyPresenterImp();
                     presenter.deleteWord(word.getId());
                     mData.remove(position);
                     notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, mData.size());
                     dialogInterface.cancel();
                 })
                 .setNegativeButton(R.string.no, (dialogInterface, i) -> dialogInterface.cancel()).show();
@@ -117,7 +117,6 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
                     word.setKoWord(koWord.getText().toString());
                     word.setRuWord(ruWord.getText().toString());
                     notifyItemChanged(position);
-                    VocabularyPresenterImp presenter = new VocabularyPresenterImp();
                     presenter.updateWord(word);
                     dialogInterface.cancel();
                 }).show();

@@ -33,16 +33,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FragmentSignIn extends Fragment {
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference myRef;
-    private FirebaseAuth mAuth;
+    private final FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+    private final DatabaseReference myRef = mFirebaseDatabase.getReference();
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private EditText ETemail;
     private EditText ETpassword;
-    private UserInformation userInformation;
 
     private DefaultPreferences defaultPreferences;
-    private static final String DEFAULT_PREF = "DEFAULT_PREF";
-    private static final String USER_PREF = "USER_PREF";
     private static final String KEY_ID = "id";
     private static final String FIREBASE_KEY = "users";
 
@@ -55,27 +52,11 @@ public class FragmentSignIn extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
-        ETemail = (EditText) view.findViewById(R.id.et_email);
-        ETpassword = (EditText) view.findViewById(R.id.et_password);
-        userInformation = new UserInformation();
+        ETemail = view.findViewById(R.id.et_email);
+        ETpassword = view.findViewById(R.id.et_password);
+        (view.findViewById(R.id.btn_sign_in)).setOnClickListener(view1 -> signin(ETemail.getText().toString(),ETpassword.getText().toString()));
+        (view.findViewById(R.id.btn_registration)).setOnClickListener(view12 -> registration(ETemail.getText().toString(),ETpassword.getText().toString()));
 
-        (view.findViewById(R.id.btn_sign_in)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signin(ETemail.getText().toString(),ETpassword.getText().toString());
-            }
-        });
-        (view.findViewById(R.id.btn_registration)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registration(ETemail.getText().toString(),ETpassword.getText().toString());
-            }
-        });
-
-        //загрузчик
         defaultPreferences = ((CustomApplication) getContext().getApplicationContext()).getPreferences();
     }
 

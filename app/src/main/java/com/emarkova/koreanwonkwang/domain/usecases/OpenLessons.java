@@ -6,7 +6,7 @@ import com.emarkova.koreanwonkwang.data.database.DBRepository;
 import java.util.List;
 
 public class OpenLessons {
-    DBRepository repository;
+    private final DBRepository repository;
 
     public OpenLessons() {
         repository = CustomApplication.getDBManager();

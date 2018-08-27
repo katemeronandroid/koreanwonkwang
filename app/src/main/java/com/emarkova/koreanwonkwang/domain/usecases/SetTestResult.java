@@ -5,7 +5,7 @@ import com.emarkova.koreanwonkwang.data.database.DBManager;
 import com.emarkova.koreanwonkwang.data.database.DBRepository;
 
 public class SetTestResult {
-    DBRepository repository;
+    private final DBRepository repository;
 
     public SetTestResult(){
         repository = CustomApplication.getDBManager();

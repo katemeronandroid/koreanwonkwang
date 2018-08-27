@@ -26,6 +26,7 @@ public class ActivityVocabulary extends AppCompatActivity implements MVPVocabula
     private RecyclerView.Adapter vocabularyAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private static FloatingActionButton floatingButton;
+    private final VocabularyPresenterImp presenter = new VocabularyPresenterImp();
 
     @Override
     public void onBackPressed() {
@@ -46,7 +47,6 @@ public class ActivityVocabulary extends AppCompatActivity implements MVPVocabula
         vocabularyRecyclerView = findViewById(R.id.wordRecyclerList);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         vocabularyRecyclerView.setLayoutManager(layoutManager);
-        VocabularyPresenterImp presenter = new VocabularyPresenterImp();
         presenter.connectToView(ActivityVocabulary.this);
         presenter.getVocabularyList();
         initToolbar();
@@ -69,8 +69,6 @@ public class ActivityVocabulary extends AppCompatActivity implements MVPVocabula
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setView(layout);
         builder.setPositiveButton(R.string.save, (dialogInterface, i) -> {
-            VocabularyPresenterImp presenter = new VocabularyPresenterImp();
-            presenter.connectToView(ActivityVocabulary.this);
             presenter.newWord(koWord.getText().toString(), ruWord.getText().toString());
             dialogInterface.cancel();
             presenter.getVocabularyList();
@@ -84,7 +82,7 @@ public class ActivityVocabulary extends AppCompatActivity implements MVPVocabula
 
     @Override
     public void setWordsList(List<Word> list) {
-        vocabularyAdapter = new VocabularyAdapter(list);
+        vocabularyAdapter = new VocabularyAdapter(list, presenter);
         vocabularyRecyclerView.setAdapter(vocabularyAdapter);
         if(list.size() == 0)
             setFABVisibility(View.VISIBLE);

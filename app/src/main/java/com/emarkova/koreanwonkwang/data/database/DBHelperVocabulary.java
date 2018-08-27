@@ -18,14 +18,14 @@ import java.util.Random;
 
 public class DBHelperVocabulary extends SQLiteOpenHelper {
     private static final String TABNAME = "VOCABULARY";
-    private static final String DB_NAME = "weather_database";
+    private static final String DB_NAME = "korean_database";
     private static final int VERSION_DB = 1;
 
-    public DBHelperVocabulary(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    DBHelperVocabulary(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
-    public DBHelperVocabulary(Context context) {
+    DBHelperVocabulary(Context context) {
 
         this(context, DB_NAME, null, VERSION_DB);
     }
