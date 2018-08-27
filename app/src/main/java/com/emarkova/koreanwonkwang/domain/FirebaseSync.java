@@ -19,7 +19,7 @@ public class FirebaseSync {
     public FirebaseSync(Context context) {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
-        preferences = ((CustomApplication) context).getPreferences();
+        preferences = ((CustomApplication) context.getApplicationContext()).getPreferences();
     }
 
     public void syncFirebaseLevel(String level) {
