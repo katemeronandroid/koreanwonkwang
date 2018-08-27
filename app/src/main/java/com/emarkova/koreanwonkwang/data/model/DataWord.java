@@ -1,5 +1,8 @@
 package com.emarkova.koreanwonkwang.data.model;
 
+/**
+ * Data layer model
+ */
 public class DataWord {
     private String id;
     private String koWord;

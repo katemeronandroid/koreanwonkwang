@@ -1,5 +1,8 @@
 package com.emarkova.koreanwonkwang.presentation.model;
 
+/**
+ * Presentation layer model
+ */
 public class Lesson {
     private int number;
     private int open;

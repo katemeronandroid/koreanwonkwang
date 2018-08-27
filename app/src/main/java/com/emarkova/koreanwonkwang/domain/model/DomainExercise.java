@@ -1,5 +1,8 @@
 package com.emarkova.koreanwonkwang.domain.model;
 
+/**
+ * Domain layer model
+ */
 public class DomainExercise {
     private String lessonNumber;
     private String type;

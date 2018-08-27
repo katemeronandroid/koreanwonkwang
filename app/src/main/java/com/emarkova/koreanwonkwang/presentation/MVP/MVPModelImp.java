@@ -7,6 +7,9 @@ import com.emarkova.koreanwonkwang.presentation.model.Exercise;
 
 import java.util.List;
 
+/**
+ * Data model implementation.
+ */
 public class MVPModelImp implements MVPModel {
     private final GetExerciseList modelGetExerciseList = new GetExerciseList();
     private final SetTestResult modelSetTestResult = new SetTestResult();

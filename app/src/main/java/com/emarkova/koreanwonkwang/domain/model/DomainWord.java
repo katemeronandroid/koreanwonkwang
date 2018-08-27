@@ -1,5 +1,8 @@
 package com.emarkova.koreanwonkwang.domain.model;
 
+/**
+ * Domain layer model
+ */
 public class DomainWord {
     private String id;
     private String koWord;

@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
+    /**
+     * Go to the next activity after the Data base has been defined.
+     */
     private void notifyUserDefined() {
         if (defaultPreferences.checkUserDefined(getSharedPreferences(DEFAULT_PREF, Context.MODE_PRIVATE))) {
             Intent intent = new Intent(getApplicationContext(), ActivityLessonList.class);

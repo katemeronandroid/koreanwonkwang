@@ -106,6 +106,9 @@ public class ActivityLessonList extends AppCompatActivity implements MVPView {
         }
     }
 
+    /**
+     * Toolbar initialization.
+     */
     private void initToolbar() {
         toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -113,6 +116,10 @@ public class ActivityLessonList extends AppCompatActivity implements MVPView {
         toolbar.setTitleTextColor(0xFFFFFFFF);
         toolbar.setSubtitleTextColor(0xFFFFFFFF);
     }
+
+    /**
+     * Drawer initialization.
+     */
     private void initDrawer() {
         drawer = new Drawer()
                 .withActivity(this)
@@ -150,6 +157,10 @@ public class ActivityLessonList extends AppCompatActivity implements MVPView {
                 .build();
     }
 
+    /**
+     * Drawer header initialization.
+     * @return AccoutHeader.Result
+     */
     private AccountHeader.Result createAccountHeader(){
         UserInformation userInformation = defaultPreferences.getUserPref();
         IProfile profile = new ProfileDrawerItem()
@@ -164,6 +175,10 @@ public class ActivityLessonList extends AppCompatActivity implements MVPView {
         return accountHeader;
     }
 
+    /**
+     * Drawer items initialization.
+     * @return Array of IDrawerItems.
+     */
     private IDrawerItem[] initDrawerItems() {
         return new IDrawerItem[]{new PrimaryDrawerItem().withName(R.string.sync).withIcon(FontAwesome.Icon.faw_exchange).withIdentifier(1),
                 new PrimaryDrawerItem().withName(R.string.my_vocabulary).withIcon(FontAwesome.Icon.faw_book).withIdentifier(2),
@@ -172,6 +187,9 @@ public class ActivityLessonList extends AppCompatActivity implements MVPView {
                 new SecondaryDrawerItem().withName(R.string.about_app).withIcon(FontAwesome.Icon.faw_question).withIdentifier(4)};
     }
 
+    /**
+     * RecyclerView initialization.
+     */
     private void initRecyclerView() {
         lessonRecyclerView = findViewById(R.id.lessonRecyclerList);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

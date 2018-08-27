@@ -48,6 +48,10 @@ public class FragmentAudio extends Fragment {
         }
     }
 
+    /**
+     * Play audio.
+     * @param fileName name of local file.
+     */
     private void playAudio(String fileName) {
         String path = "audio/"+fileName+".mp3";
         try {
@@ -61,6 +65,9 @@ public class FragmentAudio extends Fragment {
 
     }
 
+    /**
+     * Stop audio.
+     */
     private void stopAudio() {
         mediaPlayer.stop();
         mediaPlayer.release();
@@ -72,6 +79,10 @@ public class FragmentAudio extends Fragment {
         mediaPlayer.release();
     }
 
+    /**
+     * Set test mode for a fragment.
+     * @param testMode boolean
+     */
     public void setTestMode(boolean testMode) {
         this.testMode = testMode;
     }

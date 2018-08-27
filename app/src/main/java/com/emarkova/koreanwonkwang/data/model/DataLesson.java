@@ -1,7 +1,8 @@
 package com.emarkova.koreanwonkwang.data.model;
 
-import android.util.Log;
-
+/**
+ * Data layer model
+ */
 public class DataLesson {
     private int number;
     private int open;

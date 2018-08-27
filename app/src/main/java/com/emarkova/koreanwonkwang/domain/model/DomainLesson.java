@@ -1,5 +1,8 @@
 package com.emarkova.koreanwonkwang.domain.model;
 
+/**
+ * Domain layer model
+ */
 public class DomainLesson {
     private int number;
     private int open;

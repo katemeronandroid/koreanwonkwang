@@ -58,6 +58,10 @@ public class ActivityTranslate extends AppCompatActivity implements MVPVocabular
         localBroadcastManager.registerReceiver(mReceiver, mFilter);
     }
 
+    /**
+     * Change text for translation with translated text.
+     * @param view clicked button
+     */
     public void changeText(View view) {
         String tmp = editText.getText().toString();
         editText.setText(textView.getText());
@@ -74,6 +78,10 @@ public class ActivityTranslate extends AppCompatActivity implements MVPVocabular
         }
     }
 
+    /**
+     * Saves translated word into Vocabulary table.
+     * @param view clicked button
+     */
     public void saveWord(View view) {
         if(editText.getText().length() != 0) {
             if(currentLang.equals("ko"))
@@ -103,6 +111,9 @@ public class ActivityTranslate extends AppCompatActivity implements MVPVocabular
         }
     }
 
+    /**
+     * Toolbar initialization.
+     */
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle(R.string.translator);
@@ -112,6 +123,9 @@ public class ActivityTranslate extends AppCompatActivity implements MVPVocabular
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
+    /**
+     * Define text changed listener.
+     */
     private void translateTextListeners() {
         editText.addTextChangedListener(new TextWatcher() {
             @Override

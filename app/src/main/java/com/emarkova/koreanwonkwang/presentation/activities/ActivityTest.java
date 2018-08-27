@@ -48,6 +48,12 @@ public class ActivityTest extends AppCompatActivity implements MVPView{
         presenter.getTest(title);
     }
 
+    /**
+     * Check if the input answer is correct.
+     * @param answer correct answer
+     * @param input user answer
+     * @return boolean
+     */
     private String checkAnswer(String answer, String input) {
         if (input != null)
             if(input.equalsIgnoreCase(answer)) {
@@ -63,6 +69,9 @@ public class ActivityTest extends AppCompatActivity implements MVPView{
         getSupportActionBar().setTitle(ConstantString.LESSON + title);
     }
 
+    /**
+     * Clean stack of fragments.
+     */
     private void clearStack(){
         int count = getSupportFragmentManager().getBackStackEntryCount();
         while(count >= 0){
@@ -129,11 +138,19 @@ public class ActivityTest extends AppCompatActivity implements MVPView{
         }
     }
 
+    /**
+     * Set test results to Data base and user preferences.
+     * @param rightAnswers
+     */
     private void setTestResult(int rightAnswers) {
         double result = ((double) rightAnswers /ConstantString.LESSON_SIZE)*ConstantString.PERCENT;
         presenter.setTestResult(result, title);
     }
 
+    /**
+     * Choose and set proper fragment depends on exercise's type.
+     * @param exercise to set
+     */
     private void setExercise(Exercise exercise) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(EXERCISE_KEY, exercise);

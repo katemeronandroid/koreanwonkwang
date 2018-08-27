@@ -52,6 +52,9 @@ public class ActivityVocabulary extends AppCompatActivity implements MVPVocabula
         initToolbar();
     }
 
+    /**
+     * Toolbar initialization.
+     */
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle(R.string.my_vocabulary);
@@ -61,6 +64,10 @@ public class ActivityVocabulary extends AppCompatActivity implements MVPVocabula
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
+    /**
+     * Save new word into Vocabulary table.
+     * @param view clicked button
+     */
     public void newWord(View view) {
         LayoutInflater inflater = LayoutInflater.from(view.getContext());
         View layout = inflater.inflate(R.layout.dialog_add_word, null);
@@ -76,6 +83,10 @@ public class ActivityVocabulary extends AppCompatActivity implements MVPVocabula
         builder.create().show();
     }
 
+    /**
+     * Set button visibility.
+     * @param mode
+     */
     public static void setFABVisibility(int mode) {
         floatingButton.setVisibility(mode);
     }

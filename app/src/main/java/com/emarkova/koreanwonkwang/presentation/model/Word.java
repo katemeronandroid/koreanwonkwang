@@ -1,5 +1,8 @@
 package com.emarkova.koreanwonkwang.presentation.model;
 
+/**
+ * Presentation layer model
+ */
 public class Word {
     private String id;
     private String koWord;

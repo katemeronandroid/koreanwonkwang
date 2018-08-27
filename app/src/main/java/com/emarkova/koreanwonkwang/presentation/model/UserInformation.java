@@ -1,8 +1,10 @@
 package com.emarkova.koreanwonkwang.presentation.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Presentation layer model
+ */
 public class UserInformation {
     private String userId;
     private String userName;

@@ -3,6 +3,9 @@ package com.emarkova.koreanwonkwang.presentation.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Presentation layer model
+ */
 public class Exercise implements Parcelable {
     private String lessonNumber;
     private String type;

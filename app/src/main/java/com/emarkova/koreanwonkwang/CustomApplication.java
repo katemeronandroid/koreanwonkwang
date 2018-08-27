@@ -13,12 +13,19 @@ public class CustomApplication extends Application {
         mApplication = this;
     }
 
+    /**
+     * Get Data layer repository implementation.
+     * @return DBManager
+     */
     public static DBManager getDBManager() {
         DBManager manager = DBManager.getInstance(mApplication.getApplicationContext());
         return manager;
     }
 
-
+    /**
+     * Get Default preferences
+     * @return DefaultPreferences
+     */
     public DefaultPreferences getPreferences() {
         DefaultPreferences preferences = new DefaultPreferences(mApplication);
         return preferences;

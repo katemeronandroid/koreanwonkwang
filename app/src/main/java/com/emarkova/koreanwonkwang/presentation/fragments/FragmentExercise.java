@@ -39,6 +39,10 @@ public class FragmentExercise extends Fragment {
         }
     }
 
+    /**
+     * Set test mode for a fragment.
+     * @param testMode boolean
+     */
     public void setTestMode(boolean testMode) {
         this.testMode = testMode;
     }

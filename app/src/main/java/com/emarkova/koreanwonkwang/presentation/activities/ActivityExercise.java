@@ -54,10 +54,22 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
         presenter.getExercise(title, type);
     }
 
+    /**
+     * Check if the input answer is correct.
+     * @param answer correct answer
+     * @param input user answer
+     * @return boolean
+     */
     private boolean checkAnswer(String answer, String input) {
         return input != null && input.equalsIgnoreCase(answer);
     }
 
+    /**
+     * Set proper color into Dialog depends on the answer.
+     * @param answer correct answer
+     * @param input user answer
+     * @return color code
+     */
     private int setColor(String answer, String input) {
         if (input != null)
             if(input.equalsIgnoreCase(answer)) {
@@ -72,6 +84,9 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
         getSupportActionBar().setTitle(ConstantString.LESSON + title);
     }
 
+    /**
+     * Clean stack of fragments.
+     */
     private void clearStack(){
         int count = getSupportFragmentManager().getBackStackEntryCount();
         while(count >= 0){
@@ -140,6 +155,11 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
             });
         }
     }
+
+    /**
+     * Choose and set proper fragment depends on exercise's type.
+     * @param exercise to set
+     */
     private void setExercise(Exercise exercise) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(EXERCISE_KEY, exercise);

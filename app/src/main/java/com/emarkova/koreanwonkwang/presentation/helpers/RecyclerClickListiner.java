@@ -43,5 +43,12 @@ public abstract class RecyclerClickListiner implements RecyclerView.OnItemTouchL
     public void onRequestDisallowInterceptTouchEvent(boolean b) {
 
     }
+
+    /**
+     * Define item click.
+     * @param recyclerView
+     * @param itemView
+     * @param position
+     */
     public abstract void onItemClick(RecyclerView recyclerView, View itemView, int position);
 }

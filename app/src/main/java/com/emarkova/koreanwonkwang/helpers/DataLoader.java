@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import com.emarkova.koreanwonkwang.CustomApplication;
 import com.emarkova.koreanwonkwang.data.database.DBManager;
 
 import java.io.BufferedReader;
@@ -14,27 +15,31 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class to upload the local Data base after application installation.
+ */
 public class DataLoader {
     private static final String PATH_LESSON = "lessons.txt";
     private static final String PATH_EXERCISE = "exercises.txt";
-    private DBManager manager;
-    private Context context;
+    private final AssetManager assetManager;
+    private final DBManager manager;
 
     public DataLoader(Context context) {
-        this.context = context;
-        manager = new DBManager(context);
+        assetManager = context.getAssets();
+        manager = ((CustomApplication) context).getDBManager();
     }
 
+    /**
+     * Load table of lessons.
+     */
     public void loadLessons() {
         manager.createLessonTable();
         try {
-            AssetManager assetManager = context.getAssets();
-            InputStream is = (InputStream) assetManager.open(PATH_LESSON);
+            InputStream is = assetManager.open(PATH_LESSON);
             BufferedReader br = new BufferedReader(new InputStreamReader(is, "CP1251"));
             String line = "";
             while ((line = br.readLine()) != null) {
                 String [] parce = line.split("\\|");
-                Log.d("Logs", parce[3]);
                 if(parce.length == 4) {
                     manager.uploadLesson(parce[0],parce[1], parce[2], parce[3]);
                 }
@@ -45,11 +50,14 @@ public class DataLoader {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Load table of exercises.
+     */
     public void loadExercise() {
         manager.createExerciseTable();
         try {
-            AssetManager assetManager = context.getAssets();
-            InputStream is = (InputStream) assetManager.open(PATH_EXERCISE);
+            InputStream is = assetManager.open(PATH_EXERCISE);
             BufferedReader br = new BufferedReader(new InputStreamReader(is, "CP1251"));
             String line = "";
             while ((line = br.readLine()) != null) {
@@ -65,6 +73,9 @@ public class DataLoader {
         }
     }
 
+    /**
+     * Create vocabulary table.
+     */
     public void createVocabularyTable() {
         manager.createVocabularyTable();
     }
