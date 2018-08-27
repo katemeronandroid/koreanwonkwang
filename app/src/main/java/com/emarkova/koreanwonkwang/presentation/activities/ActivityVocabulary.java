@@ -14,9 +14,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.emarkova.koreanwonkwang.R;
-import com.emarkova.koreanwonkwang.presentation.mvp.MVPVocabularyView;
-import com.emarkova.koreanwonkwang.presentation.mvp.VocabularyPresenter;
-import com.emarkova.koreanwonkwang.presentation.mvp.VocabularyPresenterImp;
+import com.emarkova.koreanwonkwang.presentation.MVP.MVPVocabularyView;
+import com.emarkova.koreanwonkwang.presentation.MVP.VocabularyPresenterImp;
 import com.emarkova.koreanwonkwang.presentation.model.Word;
 import com.emarkova.koreanwonkwang.presentation.recyclerview.VocabularyAdapter;
 
@@ -26,7 +25,6 @@ public class ActivityVocabulary extends AppCompatActivity implements MVPVocabula
     private RecyclerView vocabularyRecyclerView;
     private RecyclerView.Adapter vocabularyAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private Toolbar toolbar;
     private static FloatingActionButton floatingButton;
 
     @Override
@@ -45,45 +43,37 @@ public class ActivityVocabulary extends AppCompatActivity implements MVPVocabula
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vocabulary);
         floatingButton = findViewById(R.id.fab);
-        vocabularyRecyclerView = (RecyclerView)findViewById(R.id.wordRecyclerList);
+        vocabularyRecyclerView = findViewById(R.id.wordRecyclerList);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         vocabularyRecyclerView.setLayoutManager(layoutManager);
-        VocabularyPresenter presenter = new VocabularyPresenterImp();
+        VocabularyPresenterImp presenter = new VocabularyPresenterImp();
         presenter.connectToView(ActivityVocabulary.this);
         presenter.getVocabularyList();
         initToolbar();
     }
 
     private void initToolbar() {
-        toolbar = (Toolbar)findViewById(R.id.my_toolbar);
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle(R.string.my_vocabulary);
         toolbar.setTitleTextColor(0xFFFFFFFF);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     public void newWord(View view) {
         LayoutInflater inflater = LayoutInflater.from(view.getContext());
         View layout = inflater.inflate(R.layout.dialog_add_word, null);
-        final EditText koWord = (EditText)layout.findViewById(R.id.koreanInputDialog);
-        final EditText ruWord = (EditText)layout.findViewById(R.id.russianInputDialog);
+        final EditText koWord = layout.findViewById(R.id.koreanInputDialog);
+        final EditText ruWord = layout.findViewById(R.id.russianInputDialog);
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setView(layout);
-        builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                VocabularyPresenter presenter = new VocabularyPresenterImp();
-                presenter.connectToView(ActivityVocabulary.this);
-                presenter.newWord(koWord.getText().toString(), ruWord.getText().toString());
-                dialogInterface.cancel();
-                presenter.getVocabularyList();
-            }
+        builder.setPositiveButton(R.string.save, (dialogInterface, i) -> {
+            VocabularyPresenterImp presenter = new VocabularyPresenterImp();
+            presenter.connectToView(ActivityVocabulary.this);
+            presenter.newWord(koWord.getText().toString(), ruWord.getText().toString());
+            dialogInterface.cancel();
+            presenter.getVocabularyList();
         });
         builder.create().show();
     }

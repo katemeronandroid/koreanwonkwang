@@ -1,41 +1,41 @@
-package com.emarkova.koreanwonkwang.presentation.mvp;
+package com.emarkova.koreanwonkwang.presentation.MVP;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.emarkova.koreanwonkwang.CustomApplication;
 import com.emarkova.koreanwonkwang.DefaultPreferences;
 import com.emarkova.koreanwonkwang.domain.FirebaseSync;
+import com.emarkova.koreanwonkwang.domain.usecases.GetLessonList;
 import com.emarkova.koreanwonkwang.helpers.ConstantString;
+import com.emarkova.koreanwonkwang.presentation.activities.ActivityTest;
+import com.emarkova.koreanwonkwang.presentation.model.Lesson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MVPPresenterImp implements MVPPresenter {
+public class MVPPresenterImp {
     private MVPModel mvpModel;
     private MVPView mvpView;
-    DefaultPreferences preferences;
+    private DefaultPreferences preferences;
 
     public MVPPresenterImp() {
         this.mvpModel = new MVPModelImp();
-        preferences = CustomApplication.getPreferences();
     }
 
-    @Override
     public void connectToView(MVPView view) {
         this.mvpView = view;
+        this.preferences = ((CustomApplication) ((Context) view).getApplicationContext()).getPreferences();
     }
 
-    @Override
     public void getExercise(String title, String type) {
         mvpView.setExerciseList(mvpModel.getListOfExercise(title, type));
     }
 
-    @Override
     public void getTest(String title) {
         mvpView.setExerciseList(mvpModel.getTest(title));
     }
 
-    @Override
     public void setTestResult(double result, String title) {
         mvpModel.setTestResult(result, title);
         if(result > ConstantString.TEST_LEVEL) {
@@ -49,31 +49,33 @@ public class MVPPresenterImp implements MVPPresenter {
     }
 
     private void syncFirebaseLevelResult(double result, String title) {
-        (new FirebaseSync()).syncFirebaseLevelResult(title, String.valueOf(result));
+        (new FirebaseSync(((Context) mvpView))).syncFirebaseLevelResult(title, String.valueOf(result));
     }
 
     private void syncPreferences(String level) {
-        DefaultPreferences preferences = CustomApplication.getPreferences();
         preferences.setUserLevel(level);
     }
 
     private void syncFirebaseLevel(String level) {
-        (new FirebaseSync()).syncFirebaseLevel(level);
+        (new FirebaseSync((Context) mvpView)).syncFirebaseLevel(level);
     }
 
     public void openLessons(int level, List<String> results){
         mvpModel.openLessons(level, results);
     }
 
-    @Override
     public void openLessons() {
         List<String> result = new ArrayList<>(1);
         result.add("0.0");
         mvpModel.openLessons(1, result);
     }
 
-    @Override
     public void syncFirebaseResults() {
-        (new FirebaseSync()).syncFirebaseUserStatus();
+        (new FirebaseSync((Context) mvpView)).syncFirebaseUserStatus();
     }
+
+    public List<Lesson> getLessons() {
+        return (new GetLessonList()).getLessonList();
+    }
+
 }

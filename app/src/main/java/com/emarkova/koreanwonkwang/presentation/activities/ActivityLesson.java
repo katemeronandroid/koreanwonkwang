@@ -17,14 +17,8 @@ import com.emarkova.koreanwonkwang.helpers.ConstantString;
 public class ActivityLesson extends AppCompatActivity {
     private static final String LESSON_KEY = "number";
     private static final String TYPE_KEY = "type";
-    private FragmentManager fragmentManager;
-    private FragmentTransaction transactionManager;
-    private Toolbar toolbar;
     private String title;
-    private Button buttonWords;
-    private Button buttonGrammar;
-    private Button buttonAudio;
-    private Button buttonTest;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,78 +29,51 @@ public class ActivityLesson extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Intent intent = getIntent();
-        title = intent.getStringExtra("number");
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        title = intent.getStringExtra(LESSON_KEY);
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(0xFFFFFFFF);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
+        Button buttonWords = findViewById(R.id.buttonWords);
+        buttonWords.setOnClickListener(view -> {
+            Intent intentWords = new Intent(ActivityLesson.this, ActivityExercise.class);
+            intentWords.putExtra(LESSON_KEY, title);
+            intentWords.putExtra(TYPE_KEY, ConstantString.WORD_TYPE);
+            startActivity(intentWords);
         });
-        fragmentManager = getSupportFragmentManager();
-        buttonWords = (Button)findViewById(R.id.buttonWords);
-        buttonWords.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentWords = new Intent(ActivityLesson.this, ActivityExercise.class);
-                intentWords.putExtra(LESSON_KEY, title);
-                intentWords.putExtra(TYPE_KEY, ConstantString.WORD_TYPE);
-                startActivity(intentWords);
-            }
+        Button buttonGrammar =  findViewById(R.id.buttonGrammar);
+        buttonGrammar.setOnClickListener(view -> {
+            Intent intentGrammar = new Intent(ActivityLesson.this, ActivityExercise.class);
+            intentGrammar.putExtra(LESSON_KEY, title);
+            intentGrammar.putExtra(TYPE_KEY,ConstantString.GRAMMAR_TYPE);
+            startActivity(intentGrammar);
         });
-        buttonGrammar = (Button)findViewById(R.id.buttonGrammar);
-        buttonGrammar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentGrammar = new Intent(ActivityLesson.this, ActivityExercise.class);
-                intentGrammar.putExtra(LESSON_KEY, title);
-                intentGrammar.putExtra(TYPE_KEY,ConstantString.GRAMMAR_TYPE);
-                startActivity(intentGrammar);
-            }
+        Button buttonAudio = findViewById(R.id.buttonListen);
+        buttonAudio.setOnClickListener(view -> {
+            Intent intertAudio = new Intent(ActivityLesson.this, ActivityExercise.class);
+            intertAudio.putExtra(LESSON_KEY, title);
+            intertAudio.putExtra(TYPE_KEY, ConstantString.AUDIO_TYPE);
+            startActivity(intertAudio);
         });
-        buttonAudio = (Button)findViewById(R.id.buttonListen);
-        buttonAudio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intertAudio = new Intent(ActivityLesson.this, ActivityExercise.class);
-                intertAudio.putExtra(LESSON_KEY, title);
-                intertAudio.putExtra(TYPE_KEY, ConstantString.AUDIO_TYPE);
-                startActivity(intertAudio);
-            }
-        });
-        buttonTest = (Button)findViewById(R.id.buttonTest);
-        buttonTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentTest = new Intent(ActivityLesson.this, ActivityTest.class);
-                intentTest.putExtra(LESSON_KEY, title);
-                startActivity(intentTest);
-            }
+        Button buttonTest = findViewById(R.id.buttonTest);
+        buttonTest.setOnClickListener(view -> {
+            Intent intentTest = new Intent(ActivityLesson.this, ActivityTest.class);
+            intentTest.putExtra(LESSON_KEY, title);
+            startActivity(intentTest);
         });
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
-        toolbar.setTitle(ConstantString.LESSON + title);
-        toolbar.setTitleTextColor(0xFFFFFFFF);
+        getSupportActionBar().setTitle(ConstantString.LESSON + title);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(ActivityLesson.this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
-
-    private void clearStack(){
-        int count = fragmentManager.getBackStackEntryCount(); //getBackStackEntryCount();
-        while(count > 0){
-            fragmentManager.popBackStack();
-            count--;
-        }
     }
 }

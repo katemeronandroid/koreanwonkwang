@@ -47,7 +47,7 @@
             android:screenOrientation="portrait"/>
 
         <service
-            android:name=".MyIntentService"
+            android:name=".TranslateIntentService"
             android:exported="false"></service>
     </application>
 

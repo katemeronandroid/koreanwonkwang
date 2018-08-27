@@ -20,9 +20,9 @@ import com.emarkova.koreanwonkwang.presentation.model.Exercise;
 import java.io.IOException;
 
 public class FragmentAudio extends Fragment {
+    private static final String EXERCISE_KEY = "exercise";
     private FragmentAudioBinding binding;
-    private Button buttonPlay;
-    private MediaPlayer mediaPlayer;
+    private final MediaPlayer mediaPlayer = new MediaPlayer();
     private Exercise exercise;
     private boolean testMode = false;
 
@@ -30,8 +30,7 @@ public class FragmentAudio extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_audio, container, false);
-        View view = binding.getRoot();
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -39,15 +38,12 @@ public class FragmentAudio extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         if(bundle != null) {
-            exercise = bundle.getParcelable("exercise");
+            exercise = bundle.getParcelable(EXERCISE_KEY);
             binding.setExercise(exercise);
-            buttonPlay = (Button) view.findViewById(R.id.buttonPlayAudio);
-            buttonPlay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    stopAudio();
-                    playAudio(exercise.getAudio());
-                }
+            Button buttonPlay = view.findViewById(R.id.buttonPlayAudio);
+            buttonPlay.setOnClickListener(view1 -> {
+                stopAudio();
+                playAudio(exercise.getAudio());
             });
         }
     }
@@ -56,7 +52,6 @@ public class FragmentAudio extends Fragment {
         String path = "audio/"+fileName+".mp3";
         try {
             AssetFileDescriptor descriptor = getActivity().getAssets().openFd(path);
-            mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
             mediaPlayer.prepare();
             mediaPlayer.start();
@@ -67,20 +62,14 @@ public class FragmentAudio extends Fragment {
     }
 
     private void stopAudio() {
-        if(mediaPlayer!=null){
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
+        mediaPlayer.stop();
+        mediaPlayer.release();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
+        mediaPlayer.release();
     }
 
     public void setTestMode(boolean testMode) {

@@ -2,6 +2,7 @@ package com.emarkova.koreanwonkwang;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.emarkova.koreanwonkwang.data.api.APIHelper;
@@ -17,14 +18,16 @@ import java.util.Map;
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
-public class MyIntentService extends IntentService {
+public class TranslateIntentService extends IntentService {
     private static final long TIMEOUT = 1000;
     private static final String KEY_LANG = "lang";
     private static final String KEY_ACTION = "emarkova.GET_TRANSLATION";
     private static final String KEY_WORD = "text";
+    private LocalBroadcastManager localBroadcastManager;
 
-    public MyIntentService() {
-        super("MyIntentService");
+    public TranslateIntentService() {
+        super("TranslateIntentService");
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
 
     @Override
@@ -36,8 +39,6 @@ public class MyIntentService extends IntentService {
         Intent broadcastIntent = new Intent(KEY_ACTION);
         broadcastIntent.putExtra(KEY_WORD, translation);
         broadcastIntent.putExtra(KEY_LANG, lang);
-        sendOrderedBroadcast(broadcastIntent, null);
-        //sendBroadcast(broadcastIntent);
-
+        localBroadcastManager.sendBroadcast(broadcastIntent);
     }
 }

@@ -41,4 +41,11 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="sync">Синхронизировать</string>
+    <string name="enter_email">Введите почту</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="auth_success">Авторизация одобрена</string>
+    <string name="auth_failed">В авторизации отказано</string>
+    <string name="registration_success">Регистрация одобрена</string>
+    <string name="registration_failed">В регистрации отказано</string>
+    <string name="info_about_app">Информация об приложении</string>
 </resources>

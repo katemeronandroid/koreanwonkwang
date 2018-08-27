@@ -10,10 +10,6 @@ public class UserInformation {
     private String userLevel;
     private List<String> results;
 
-    public UserInformation(){
-
-    }
-
     public String getUserName() {
         return userName;
     }

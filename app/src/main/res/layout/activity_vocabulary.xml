@@ -34,6 +34,7 @@
         android:layout_marginRight="16dp"
         android:onClick="newWord"
         android:src="@drawable/ic_add_black_24dp"
+        app:backgroundTint="#40c4ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

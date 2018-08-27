@@ -8,18 +8,16 @@ import com.emarkova.koreanwonkwang.presentation.model.UserInformation;
 
 public class DefaultPreferences {
     private static final String NAME_PREF = "DEFAULT_PREF";
-
     private static final String DB_DEFINED = "DB_DEF";
     private static final String USER_PREF = "USER_PREF";
     private static final String USER_ID = "USER_ID";
     private static final String USER_NAME = "USER_NAME";
     private static final String USER_MAIL = "USER_MAIL";
     private static final String USER_LEVEL = "USER_LEVEL";
-
-    private Context context;
+    private final SharedPreferences preferences;
 
     public DefaultPreferences(Context context) {
-        this.context = context;
+        preferences = context.getSharedPreferences(NAME_PREF, Context.MODE_PRIVATE);;
     }
 
     public boolean checkDBDefined(SharedPreferences preferences){
@@ -30,7 +28,6 @@ public class DefaultPreferences {
     }
 
     public void setBDDefined(boolean param) {
-        SharedPreferences preferences = context.getSharedPreferences(NAME_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(DB_DEFINED, param);
         editor.commit();
@@ -44,7 +41,6 @@ public class DefaultPreferences {
     }
 
     public void setUserPref(UserInformation userInformation) {
-        SharedPreferences preferences = context.getSharedPreferences(NAME_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(USER_ID, userInformation.getUserId());
         editor.putString(USER_NAME, userInformation.getUserName());
@@ -55,21 +51,18 @@ public class DefaultPreferences {
     }
 
     public void setUserName(String name) {
-        SharedPreferences preferences = context.getSharedPreferences(NAME_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(USER_NAME, name);
         editor.commit();
     }
 
     public void setUserLevel(String level) {
-        SharedPreferences preferences = context.getSharedPreferences(NAME_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(USER_LEVEL, level);
         editor.commit();
     }
 
     public UserInformation getUserPref() {
-        SharedPreferences preferences = context.getSharedPreferences(NAME_PREF, Context.MODE_PRIVATE);
         UserInformation result = new UserInformation();
         result.setUserId(preferences.getString(USER_ID, null));
         result.setUserName(preferences.getString(USER_NAME, null));
@@ -79,7 +72,6 @@ public class DefaultPreferences {
     }
 
     public void signoutUser() {
-        SharedPreferences preferences = context.getSharedPreferences(NAME_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(USER_ID, null);
         editor.putString(USER_NAME, null);
@@ -90,7 +82,6 @@ public class DefaultPreferences {
     }
 
     public void nullUser() {
-        SharedPreferences preferences = context.getSharedPreferences(NAME_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(USER_PREF, false);
         editor.commit();

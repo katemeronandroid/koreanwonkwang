@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Exercise implements Parcelable {
-    //id integer PRIMARY KEY, les_num text NOT NULL, type text, ques text, ans text, word text, descr text
     private String lessonNumber;
     private String type;
     private String word;
@@ -27,6 +26,29 @@ public class Exercise implements Parcelable {
         this.audio = audio;
     }
 
+    protected Exercise(Parcel in) {
+        lessonNumber = in.readString();
+        type = in.readString();
+        word = in.readString();
+        description = in.readString();
+        question = in.readString();
+        answer = in.readString();
+        test = in.readString();
+        audio = in.readString();
+    }
+
+    public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
+        @Override
+        public Exercise createFromParcel(Parcel in) {
+            return new Exercise(in);
+        }
+
+        @Override
+        public Exercise[] newArray(int size) {
+            return new Exercise[size];
+        }
+    };
+
     @Override
     public int describeContents() {
         return 0;
@@ -34,7 +56,14 @@ public class Exercise implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-
+        parcel.writeString(lessonNumber);
+        parcel.writeString(type);
+        parcel.writeString(word);
+        parcel.writeString(description);
+        parcel.writeString(question);
+        parcel.writeString(answer);
+        parcel.writeString(test);
+        parcel.writeString(audio);
     }
 
     public String getWord() {

@@ -12,9 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.emarkova.koreanwonkwang.R;
-import com.emarkova.koreanwonkwang.presentation.mvp.MVPVocabularyView;
-import com.emarkova.koreanwonkwang.presentation.mvp.VocabularyPresenter;
-import com.emarkova.koreanwonkwang.presentation.mvp.VocabularyPresenterImp;
+import com.emarkova.koreanwonkwang.presentation.MVP.MVPVocabularyView;
+import com.emarkova.koreanwonkwang.presentation.MVP.VocabularyPresenterImp;
 import com.emarkova.koreanwonkwang.presentation.activities.ActivityVocabulary;
 import com.emarkova.koreanwonkwang.presentation.model.Word;
 
@@ -104,7 +103,7 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
                     ad.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            VocabularyPresenter presenter = new VocabularyPresenterImp();
+                            VocabularyPresenterImp presenter = new VocabularyPresenterImp();
                             presenter.deleteWord(word.getId());
                             mData.remove(position);
                             notifyItemRemoved(position);
@@ -139,7 +138,7 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
                             word.setKoWord(koWord.getText().toString());
                             word.setRuWord(ruWord.getText().toString());
                             notifyItemChanged(position);
-                            VocabularyPresenter presenter = new VocabularyPresenterImp();
+                            VocabularyPresenterImp presenter = new VocabularyPresenterImp();
                             presenter.updateWord(word);
                             dialogInterface.cancel();
                         }

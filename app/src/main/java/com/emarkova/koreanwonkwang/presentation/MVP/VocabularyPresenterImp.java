@@ -1,4 +1,4 @@
-package com.emarkova.koreanwonkwang.presentation.mvp;
+package com.emarkova.koreanwonkwang.presentation.MVP;
 
 import com.emarkova.koreanwonkwang.domain.usecases.DeleteWord;
 import com.emarkova.koreanwonkwang.domain.usecases.GetVocabularyList;
@@ -6,31 +6,30 @@ import com.emarkova.koreanwonkwang.domain.usecases.SetNewWord;
 import com.emarkova.koreanwonkwang.domain.usecases.UpdateWord;
 import com.emarkova.koreanwonkwang.presentation.model.Word;
 
-public class VocabularyPresenterImp implements VocabularyPresenter{
+public class VocabularyPresenterImp {
     private MVPVocabularyView vocabularyView;
-    @Override
+    private final GetVocabularyList getVocabularyList = new GetVocabularyList();
+    private final DeleteWord deleteWord = new DeleteWord();
+    private final SetNewWord setNewWord = new SetNewWord();
+    private final UpdateWord updateWord = new UpdateWord();
     public void connectToView(MVPVocabularyView view) {
         this.vocabularyView = view;
     }
 
-    @Override
     public void getVocabularyList() {
-        vocabularyView.setWordsList((new GetVocabularyList()).getVocabularyList());
+        vocabularyView.setWordsList(getVocabularyList.getVocabularyList());
     }
 
-    @Override
     public void deleteWord(String id) {
-        (new DeleteWord()).deleteWord(id);
+        deleteWord.deleteWord(id);
     }
 
-    @Override
     public void newWord(String koWord, String ruWord) {
-        (new SetNewWord()).setNewWord(koWord, ruWord);
+        setNewWord.setNewWord(koWord, ruWord);
     }
 
-    @Override
     public void updateWord(Word word) {
-        (new UpdateWord()).updateWord(word);
+        updateWord.updateWord(word);
     }
 
 }

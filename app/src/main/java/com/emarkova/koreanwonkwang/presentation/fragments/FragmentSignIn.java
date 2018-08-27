@@ -1,6 +1,5 @@
 package com.emarkova.koreanwonkwang.presentation.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,10 +15,7 @@ import android.widget.Toast;
 import com.emarkova.koreanwonkwang.CustomApplication;
 import com.emarkova.koreanwonkwang.DefaultPreferences;
 import com.emarkova.koreanwonkwang.R;
-import com.emarkova.koreanwonkwang.data.database.DBManager;
-import com.emarkova.koreanwonkwang.helpers.DataLoader;
-import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenter;
-import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenterImp;
+import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenterImp;
 import com.emarkova.koreanwonkwang.presentation.activities.ActivityLessonList;
 import com.emarkova.koreanwonkwang.presentation.model.UserInformation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,7 +36,6 @@ public class FragmentSignIn extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener authListener;
     private EditText ETemail;
     private EditText ETpassword;
     private UserInformation userInformation;
@@ -49,7 +44,7 @@ public class FragmentSignIn extends Fragment {
     private static final String DEFAULT_PREF = "DEFAULT_PREF";
     private static final String USER_PREF = "USER_PREF";
     private static final String KEY_ID = "id";
-    private DBManager manager; // код для теста, убрать в конце
+    private static final String FIREBASE_KEY = "users";
 
     @Nullable
     @Override
@@ -79,59 +74,16 @@ public class FragmentSignIn extends Fragment {
                 registration(ETemail.getText().toString(),ETpassword.getText().toString());
             }
         });
-       /* myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("Logs", "datashot");
-                FirebaseUser user = mAuth.getCurrentUser();
-                String userID = user.getUid();
-                userInformation.setUserName(dataSnapshot.child("users").child(userID).child("userName").getValue().toString());
-                userInformation.setUserLevel(dataSnapshot.child("users").child(userID).child("userLevel").getValue().toString());
-                String results = dataSnapshot.child("users").child(userID).child("results").getValue().toString()
-                                .replace("[", "").replace("]","").replace(" ","");
-                userInformation.setResults(Arrays.asList(results.split(",")));
-                MVPPresenter presenter = new MVPPresenterImp();
-                presenter.openLessons(Integer.parseInt(userInformation.getUserLevel()), userInformation.getResults());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-
-        manager = new DBManager(getContext());// код для теста, убрать в конце
 
         //загрузчик
-        defaultPreferences = CustomApplication.getPreferences();
-
-   /*   defaultPreferences.setBDDefined(false); //код для теста
-        manager.deleteLessonTable();
-        manager.deleteExerciseTable();
-        manager.deleteVocabularyTable();
-*/
-        if(!defaultPreferences.checkDBDefined( getActivity().getSharedPreferences(DEFAULT_PREF, Context.MODE_PRIVATE))) {
-            //загрузка данных
-            (new Thread(()->{
-                DataLoader dataLoader = new DataLoader(getContext());
-                dataLoader.loadLessons();
-                dataLoader.loadExercise();
-                dataLoader.createVocabularyTable();
-                defaultPreferences.setBDDefined(true);
-            })).start();
-        }
-        while (!defaultPreferences.checkDBDefined(getActivity().getSharedPreferences(DEFAULT_PREF, Context.MODE_PRIVATE))){}
-        if (defaultPreferences.checkUserDefined(getActivity().getSharedPreferences(USER_PREF, Context.MODE_PRIVATE))) {
-            Intent intent = new Intent(getContext(), ActivityLessonList.class);
-            startActivity(intent);
-        }
+        defaultPreferences = ((CustomApplication) getContext().getApplicationContext()).getPreferences();
     }
 
     private void signin(String email , String password) {
         if (email.equals(""))
-            Toast.makeText(getContext(), "Введите почту", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getActivity().getResources().getString(R.string.enter_email), Toast.LENGTH_SHORT).show();
         else if (password.equals(""))
-            Toast.makeText(getContext(), "Введите пароль", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),  getActivity().getResources().getString(R.string.enter_password), Toast.LENGTH_SHORT).show();
         else {
             mAuth.signInWithEmailAndPassword(email,password);
             mAuth.signOut();
@@ -139,7 +91,7 @@ public class FragmentSignIn extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), "Aвторизация одобрена", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),  getActivity().getResources().getString(R.string.auth_success), Toast.LENGTH_SHORT).show();
                         FirebaseUser user = mAuth.getCurrentUser();
                         myRef.addValueEventListener(new ValueEventListener() {
                             @Override
@@ -148,12 +100,12 @@ public class FragmentSignIn extends Fragment {
                                 String userID = user.getUid();
                                 userInformation.setUserId(user.getUid());
                                 userInformation.setUserEmail(email);
-                                userInformation.setUserName(dataSnapshot.child("users").child(userID).child("userName").getValue().toString());
-                                userInformation.setUserLevel(dataSnapshot.child("users").child(userID).child("userLevel").getValue().toString());
-                                String results = dataSnapshot.child("users").child(userID).child("results").getValue().toString()
+                                userInformation.setUserName(dataSnapshot.child(FIREBASE_KEY).child(userID).child("userName").getValue().toString());
+                                userInformation.setUserLevel(dataSnapshot.child(FIREBASE_KEY).child(userID).child("userLevel").getValue().toString());
+                                String results = dataSnapshot.child(FIREBASE_KEY).child(userID).child("results").getValue().toString()
                                         .replace("[", "").replace("]","").replace(" ","");
                                 userInformation.setResults(Arrays.asList(results.split(",")));
-                                MVPPresenter presenter = new MVPPresenterImp();
+                                MVPPresenterImp presenter = new MVPPresenterImp();
                                 presenter.openLessons(Integer.parseInt(userInformation.getUserLevel()), userInformation.getResults());
 
 
@@ -171,7 +123,7 @@ public class FragmentSignIn extends Fragment {
                         });
 
                     } else
-                        Toast.makeText(getContext(), "В авторизации отказано", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),  getActivity().getResources().getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -180,15 +132,15 @@ public class FragmentSignIn extends Fragment {
 
     private void registration (String email , String password) {
         if (email.equals(""))
-            Toast.makeText(getContext(), "Введите почту", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),  getActivity().getResources().getString(R.string.enter_email), Toast.LENGTH_SHORT).show();
         else if (password.equals(""))
-            Toast.makeText(getContext(), "Введите пароль", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),  getActivity().getResources().getString(R.string.enter_password), Toast.LENGTH_SHORT).show();
         else {
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), "Регистрация успешна", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),  getActivity().getResources().getString(R.string.registration_success), Toast.LENGTH_SHORT).show();
                         FirebaseUser user = mAuth.getCurrentUser();
                         String userID = user.getUid();
                         UserInformation userInformation = new UserInformation();
@@ -199,7 +151,7 @@ public class FragmentSignIn extends Fragment {
                         ArrayList<String> list = new ArrayList<>();
                         list.add("0.0");
                         userInformation.setResults(list);
-                        myRef.child("users").child(userID).setValue(userInformation);
+                        myRef.child(FIREBASE_KEY).child(userID).setValue(userInformation);
                         defaultPreferences.setUserPref(userInformation);
 
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -211,7 +163,7 @@ public class FragmentSignIn extends Fragment {
                         transaction.addToBackStack(null);
                         transaction.commit();
                     } else
-                        Toast.makeText(getContext(), "Регистрация провалена", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),  getActivity().getResources().getString(R.string.registration_failed), Toast.LENGTH_SHORT).show();
                 }
             });
         }

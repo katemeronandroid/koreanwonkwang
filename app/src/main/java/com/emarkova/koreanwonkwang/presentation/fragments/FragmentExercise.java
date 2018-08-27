@@ -15,30 +15,27 @@ import com.emarkova.koreanwonkwang.presentation.model.Exercise;
 import com.emarkova.koreanwonkwang.databinding.FragmentExerciseBinding;
 
 public class FragmentExercise extends Fragment {
+    private static final String EXERCISE_KEY = "exercise";
     private TextView word;
-    private TextView question;
     private FragmentExerciseBinding binding;
     private boolean testMode = false;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_exercise, container, false);
-        View view = binding.getRoot();
-        return view;
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        word = (TextView)view.findViewById(R.id.textWord);
+        word = view.findViewById(R.id.textWord);
         if(testMode)
             word.setVisibility(View.INVISIBLE);
-        question = (TextView)view.findViewById(R.id.textQuestion);
         Bundle bundle = getArguments();
         if(bundle != null) {
-            Exercise exercise = bundle.getParcelable("exercise");
+            Exercise exercise = bundle.getParcelable(EXERCISE_KEY);
             binding.setExercise(exercise);
-            //question.setText(exercise.getQuestion());
         }
     }
 

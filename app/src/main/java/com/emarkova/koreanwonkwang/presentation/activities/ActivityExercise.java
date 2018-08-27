@@ -13,9 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenter;
-import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenterImp;
-import com.emarkova.koreanwonkwang.presentation.mvp.MVPView;
+import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenterImp;
+import com.emarkova.koreanwonkwang.presentation.MVP.MVPView;
 import com.emarkova.koreanwonkwang.R;
 import com.emarkova.koreanwonkwang.presentation.fragments.FragmentAudio;
 import com.emarkova.koreanwonkwang.presentation.fragments.FragmentExercise;
@@ -58,7 +57,7 @@ public class ActivityExercise extends AppCompatActivity implements MVPView {
         });
 
 
-        MVPPresenter presenter = new MVPPresenterImp();
+        MVPPresenterImp presenter = new MVPPresenterImp();
         presenter.connectToView(this);
         presenter.getExercise(title, type);
     }

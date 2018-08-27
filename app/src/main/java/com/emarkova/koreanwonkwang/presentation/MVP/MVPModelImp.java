@@ -1,4 +1,4 @@
-package com.emarkova.koreanwonkwang.presentation.mvp;
+package com.emarkova.koreanwonkwang.presentation.MVP;
 
 import com.emarkova.koreanwonkwang.domain.usecases.GetExerciseList;
 import com.emarkova.koreanwonkwang.domain.usecases.OpenLessons;

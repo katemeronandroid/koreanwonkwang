@@ -9,22 +9,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.emarkova.koreanwonkwang.CustomApplication;
 import com.emarkova.koreanwonkwang.DefaultPreferences;
 import com.emarkova.koreanwonkwang.MainActivity;
 import com.emarkova.koreanwonkwang.R;
-import com.emarkova.koreanwonkwang.data.database.DBManager;
 import com.emarkova.koreanwonkwang.domain.FirebaseSync;
 import com.emarkova.koreanwonkwang.domain.usecases.GetLessonList;
-import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenter;
-import com.emarkova.koreanwonkwang.presentation.mvp.MVPPresenterImp;
+import com.emarkova.koreanwonkwang.presentation.MVP.MVPPresenterImp;
+import com.emarkova.koreanwonkwang.presentation.MVP.MVPView;
 import com.emarkova.koreanwonkwang.presentation.helpers.RecyclerClickListiner;
 import com.emarkova.koreanwonkwang.presentation.helpers.SpaceItemDecoration;
+import com.emarkova.koreanwonkwang.presentation.model.Exercise;
 import com.emarkova.koreanwonkwang.presentation.model.Lesson;
 import com.emarkova.koreanwonkwang.presentation.model.UserInformation;
 import com.emarkova.koreanwonkwang.presentation.recyclerview.BaseAdapter;
@@ -48,26 +48,22 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import java.util.Arrays;
 import java.util.List;
 
-public class ActivityLessonList extends AppCompatActivity {
+public class ActivityLessonList extends AppCompatActivity implements MVPView {
     private static final String LESSON_KEY = "number";
     private static final int SPACE = 10;
-    private static final String DEFAULT_PREF = "DEFAULT_PREF";
     private DefaultPreferences defaultPreferences;
+    private final MVPPresenterImp presenter = new MVPPresenterImp();
     private RecyclerView lessonRecyclerView;
     private RecyclerView.Adapter lessonAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private Toolbar toolbar;
     private Drawer.Result drawer;
-    private DBManager manager; //убрать в конце
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference myRef;
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lessonlist);
-        defaultPreferences = new DefaultPreferences(this);
+        defaultPreferences = ((CustomApplication) getApplicationContext()).getPreferences();
         initToolbar();
         initDrawer();
         initRecyclerView();
@@ -76,6 +72,7 @@ public class ActivityLessonList extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        presenter.connectToView(this);
     }
 
     @Override
@@ -110,7 +107,7 @@ public class ActivityLessonList extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitleTextColor(0xFFFFFFFF);
@@ -120,45 +117,33 @@ public class ActivityLessonList extends AppCompatActivity {
         drawer = new Drawer()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                //.withDisplayBelowToolbar(true)
                 .withActionBarDrawerToggleAnimated(true)
                 .withAccountHeader(createAccountHeader())
                 .addDrawerItems(initDrawerItems())
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-                        if(drawerItem.getIdentifier() == 4) {
-                            //alert
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(ActivityLessonList.this);
-                            builder.setTitle(R.string.about_app);
-                            builder.setMessage("Информация об приложении");
-                            builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.cancel();
-                                }
-                            });
-                            AlertDialog alert = builder.create();
-                            alert.show();
-                        }
-                        else if(drawerItem.getIdentifier() == 1) {
-                            MVPPresenterImp presenter = new MVPPresenterImp();
-                            presenter.syncFirebaseResults();
-                        }
-                        else {
-                            Intent intent;
-                            switch (drawerItem.getIdentifier()){
-                                case 2:
-                                    intent = new Intent(getApplicationContext(), ActivityVocabulary.class);
-                                    startActivity(intent);
-                                    break;
-                                case 3:
-                                    (new FirebaseSync()).syncFirebaseUserStatus();
-                                    defaultPreferences.signoutUser();
-                                    intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    break;
-                            }
+                .withOnDrawerItemClickListener((parent, view, position, id, drawerItem) -> {
+                    if(drawerItem.getIdentifier() == 4) {
+                        //alert
+                        new AlertDialog.Builder(ActivityLessonList.this)
+                        .setTitle(R.string.about_app)
+                        .setMessage(getApplicationContext().getResources().getString(R.string.info_about_app))
+                        .setPositiveButton(R.string.OK, (dialogInterface, i) -> dialogInterface.cancel()).show();
+                    }
+                    else if(drawerItem.getIdentifier() == 1) {
+                        presenter.syncFirebaseResults();
+                    }
+                    else {
+                        Intent intent;
+                        switch (drawerItem.getIdentifier()){
+                            case 2:
+                                intent = new Intent(getApplicationContext(), ActivityVocabulary.class);
+                                startActivity(intent);
+                                break;
+                            case 3:
+                                (new FirebaseSync(getApplicationContext())).syncFirebaseUserStatus();
+                                defaultPreferences.signoutUser();
+                                intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                break;
                         }
                     }
                 })
@@ -188,11 +173,11 @@ public class ActivityLessonList extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        lessonRecyclerView = (RecyclerView)findViewById(R.id.lessonRecyclerList);
+        lessonRecyclerView = findViewById(R.id.lessonRecyclerList);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         lessonRecyclerView.setLayoutManager(layoutManager);
         lessonRecyclerView.addItemDecoration(new SpaceItemDecoration(SPACE));
-        final List<Lesson> lessonList = (new GetLessonList()).getLessonList();
+        final List<Lesson> lessonList = presenter.getLessons();
         lessonAdapter = new BaseAdapter(lessonList);
         lessonRecyclerView.setAdapter(lessonAdapter);
         lessonRecyclerView.addOnItemTouchListener(new RecyclerClickListiner(this) {
@@ -208,34 +193,8 @@ public class ActivityLessonList extends AppCompatActivity {
         });
     }
 
-    private void openLessons(){
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
-        FirebaseUser user = getIntent().getParcelableExtra("user");
+    @Override
+    public void setExerciseList(List<Exercise> data) {
 
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("Logs", "datashot LIST");
-                String userID = user.getUid();
-                defaultPreferences.setUserName(dataSnapshot.child("users").child(userID).child("userName").getValue().toString());
-                defaultPreferences.setUserLevel(dataSnapshot.child("users").child(userID).child("userLevel").getValue().toString());
-                String results = dataSnapshot.child("users").child(userID).child("results").getValue().toString()
-                        .replace("[", "").replace("]","").replace(" ","");
-                UserInformation userInformation = new UserInformation();
-                userInformation.setResults(Arrays.asList(results.split(",")));
-                MVPPresenter presenter = new MVPPresenterImp();
-                presenter.openLessons(Integer.parseInt(defaultPreferences.getUserPref().getUserLevel()), userInformation.getResults());
-                initDrawer();
-                initRecyclerView();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
-
 }

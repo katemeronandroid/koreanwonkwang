@@ -18,9 +18,9 @@ public class CustomApplication extends Application {
         return manager;
     }
 
-    public static DefaultPreferences getPreferences() {
+
+    public DefaultPreferences getPreferences() {
         DefaultPreferences preferences = new DefaultPreferences(mApplication);
         return preferences;
     }
-
 }
