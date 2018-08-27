@@ -7,6 +7,9 @@ import android.widget.TextView;
 import com.emarkova.koreanwonkwang.R;
 
 
+/**
+ * ViewHolder from an opened lesson.
+ */
 public class BaseViewHolder extends RecyclerView.ViewHolder {
     public TextView lessonName;
     public TextView lessonTheme;

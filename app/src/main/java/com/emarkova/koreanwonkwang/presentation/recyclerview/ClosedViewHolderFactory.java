@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 
 import com.emarkova.koreanwonkwang.R;
 
+/**
+ * ViewHolder factory for closed lessons.
+ */
 public class ClosedViewHolderFactory implements ViewHolderFactory {
     @Override
     public RecyclerView.ViewHolder createViewHolder(ViewGroup parent, LayoutInflater inflater) {

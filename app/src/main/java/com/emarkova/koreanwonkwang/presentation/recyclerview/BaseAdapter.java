@@ -12,6 +12,9 @@ import com.emarkova.koreanwonkwang.presentation.model.Lesson;
 
 import java.util.List;
 
+/**
+ * Adapter for List of Lessons representation.
+ */
 public class BaseAdapter extends RecyclerView.Adapter {
     private final List<Lesson> mList;
     private final SparseArray<ViewHolderFactory> mFactoryMap;

@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.util.Map;
 import retrofit2.Response;
 
-
+/**
+ * Organise working with Yandex Translate.
+ */
 public class APIHelper {
     private static RetrofitHelper retrofit = null;
     private static final String KEY = "trnsl.1.1.20180726T061141Z.a14801d917a62a95.c00d63f843382ca8309b1309fd246f75526b20a1";
@@ -25,6 +27,11 @@ public class APIHelper {
 
     }
 
+    /**
+     * Get the translation
+     * @param textSend string for translation
+     * @return translated string
+     */
     public String getTranslation(String textSend) {
         language = getLanguage(textSend);
         String fromTo = "";
@@ -56,6 +63,11 @@ public class APIHelper {
             return textSend;
     }
 
+    /**
+     * Define the current language.
+     * @param textSend string for translation
+     * @return language code as string
+     */
     private String getLanguage(String textSend) {
         try {
             Response<Object> response = retrofit.getServer().getLang(KEY,textSend).execute();
@@ -70,10 +82,18 @@ public class APIHelper {
         return language;
     }
 
+    /**
+     * Return current language
+     * @return language code as string
+     */
     public String currentLanguage() {
         return this.language;
     }
 
+    /**
+     * Return the translated response as Object
+     * @return response as Object
+     */
     private Object getTranslateResponse() {
         return translateResponse;
     }

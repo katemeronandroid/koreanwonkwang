@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import com.emarkova.koreanwonkwang.R;
 
+/**
+ * ViewHolder for a closed lesson.
+ */
 public class ClosedViewHolder extends RecyclerView.ViewHolder {
     public TextView lessonName;
     public TextView lessonTheme;

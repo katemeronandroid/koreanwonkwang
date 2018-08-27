@@ -1,6 +1,5 @@
 package com.emarkova.koreanwonkwang.presentation.recyclerview;
 
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +18,9 @@ import com.emarkova.koreanwonkwang.presentation.model.Word;
 
 import java.util.List;
 
+/**
+ * Adapter for vocabulary representation.
+ */
 public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocabularyView{
     public static boolean editMode = false;
     private final List<Word> mData;
@@ -64,6 +66,9 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
     @Override
     public void setWordsList(List<Word> list) {}
 
+    /**
+     * ViewHolder inner class.
+     */
     private class VocabularyViewHolder extends RecyclerView.ViewHolder {
         private TextView koWord;
         private TextView ruWord;
@@ -91,6 +96,9 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
             });
         }
 
+        /**
+         * Button click listeners initialization.
+         */
         private void initListeners() {
             imageDelete.setOnClickListener(view -> {
                 new AlertDialog.Builder(view.getContext())
@@ -123,10 +131,18 @@ public class VocabularyAdapter extends RecyclerView.Adapter  implements MVPVocab
             });
         }
 
+        /**
+         * Set current position.
+         * @param position
+         */
         void setPosition(int position) {
             this.position = position;
         }
 
+        /**
+         * Set current word.
+         * @param word
+         */
         public void setWord(Word word) {
             this.word = word;
         }

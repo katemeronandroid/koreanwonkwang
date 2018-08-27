@@ -9,6 +9,9 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/**
+ * Interface to define server requests.
+ */
 public interface TranslateServer {
 
     @POST("/api/v1.5/tr.json/translate")
